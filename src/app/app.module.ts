@@ -17,6 +17,12 @@ import {MatListModule} from '@angular/material/list';
 import {AppRoutingModule} from './app-routing/app-routing.module';
 import { HeaderComponent } from './header/header.component'
 
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatInputModule} from '@angular/material';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +37,11 @@ import { HeaderComponent } from './header/header.component'
     MatToolbarModule,
     FlexLayoutModule,
     MatListModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    ReactiveFormsModule,
+    MatInputModule
 
   ],
   providers: [],
