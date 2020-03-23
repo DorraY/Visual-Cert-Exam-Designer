@@ -3,3 +3,14 @@
     margin: 0px auto;
     padding: 20px 0px;
 }
+
+a {
+    font-weight: bold 200px;
+    color: #007df8;
+}
+
+a:hover {
+    cursor:help;
+    
+}
+

@@ -10,7 +10,7 @@
                 <td >
                   <mat-form-field class="form-group">
                     <textarea matInput formControlName="question" 
-                    placeholder="Saisir la question" rows="5">  
+                    placeholder="Saisir la question"  rows="10">  
                     </textarea>
                     <mat-error *ngIf="formErrors.question" > {{formErrors.question}} </mat-error>
                     <mat-error *ngIf="QuestionForm.get('question').touched &&!formErrors.question" >Une question est obligatoire</mat-error>
@@ -26,45 +26,49 @@
                 <div class="row text-center d-flex justify-content-between pt-5 mb-3">
             
                   <div class="col-md-2 mb-3">
-                    <h6 class="text-uppercase font-weight-bold">
-            
+                    <h6 class="font-weight-bold">
+                              <label for="">Réponse 1</label>
                               <mat-form-field class="form-group ">
                                 <textarea matInput formControlName="reponses" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
                               </mat-form-field>
+
             
                     </h6>
                   </div>
             
             
                   <div class="col-md-2 mb-3">
-                    <h6 class="text-uppercase font-weight-bold">
-            
+                    <h6 class="font-weight-bold">
+                              <label for="">Réponse 2</label>
                               <mat-form-field class="form-group ">
                                 <textarea matInput formControlName="reponses" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
                               </mat-form-field>
+
             
                     </h6>
                   </div>
 
                   <div class="col-md-2 mb-3">
-                    <h6 class="text-uppercase font-weight-bold">
-            
+                    <h6 class="font-weight-bold">
+                      <label for="">Réponse 3</label>
                               <mat-form-field class="form-group ">
                                 <textarea matInput formControlName="reponses" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
                               </mat-form-field>
+
             
                     </h6>
                   </div>
              
                   <div class="col-md-2 mb-3">
-                    <h6 class="text-uppercase font-weight-bold">
-            
+                    <h6 class="font-weight-bold">
+                      <label for="">Réponse 4</label>
+
                               <mat-form-field class="form-group ">
                                 <textarea matInput formControlName="reponses" 
                                 placeholder="Saisir la réponse" rows="5">  
@@ -76,29 +80,35 @@
             
                 </div>
               </div>
+
+              <div class="container">
+
+                <div class="row text-center d-flex justify-content-between pt-5 mb-3">
+            
+                  <div class="col-md-2 mb-3">
+                          <button type="submit"  mat-button class="btn btn-lg  btn-block btn-success " 
+                          [disabled]="QuestionForm.invalid">Valider examen
+                        </button>
+                  </div>
             
             
+                  <div class="col-md-2 mb-3">
+                        <button type="button" mat-button class="btn btn-lg  btn-block btn-danger " 
+                        onclick="reset()" >Reset question
+                        </button> 
+                  </div>
+             
+                  <div class="col-md-2 mb-3">
+                        <button type="button" mat-button class="btn btn-lg btn-block btn-success " 
+                        onclick="reset()" >Ajouter question
+                        </button> 
+                  </div>
             
-              
+                </div>
+              </div>
 
-
-
-
-
-
-              <button type="submit"  mat-button class="btn btn-lg btn-block btn-dark " 
-              [disabled]="QuestionForm.invalid">Finir
-            </button>
-            <button type="button" mat-button class="btn btn-lg btn-block btn-danger " 
-            onclick="reset()" >Reset question
-            </button> 
-            <button type="button" mat-button class="btn btn-lg btn-block btn-success " 
-            onclick="reset()" >Ajouter question
-            </button> 
             </table>
             
-
-
 
       </form>
     </div>

@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import {HomeComponent} from './home/home.component'
 import {ExamInterfaceComponent} from './exam-interface/exam-interface.component'
-
+import { QuestionsInterfaceComponent } from './questions-interface/questions-interface.component';
+import { AboutComponent } from './about/about.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar'; 
@@ -21,7 +22,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material';
-import { QuestionsInterfaceComponent } from './questions-interface/questions-interface.component';
+import { MatDialogModule,MatDialogRef } from '@angular/material/dialog';
+
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -31,7 +34,8 @@ import { QuestionsInterfaceComponent } from './questions-interface/questions-int
     ExamInterfaceComponent,
     HomeComponent,
     HeaderComponent,
-    QuestionsInterfaceComponent
+    QuestionsInterfaceComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -43,10 +47,20 @@ import { QuestionsInterfaceComponent } from './questions-interface/questions-int
     MatSelectModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule,
+    FlexLayoutModule,
+    
+
 
   ],
-  providers: [],
+  entryComponents: [
+    AboutComponent
+  ],
+  providers: [{
+    provide: MatDialogRef,
+    useValue: {}
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
