@@ -1,14 +1,20 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Directive } from '@angular/core';
+import {Router} from '@angular/router'
+
+
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Themes,Exam} from '../shared/exam'
 import {Question} from '../shared/question'
+
+import {routes} from '../app-routing/routes'
 
 @Component({
   selector: 'app-exam-interface',
   templateUrl: './exam-interface.component.html',
   styleUrls: ['./exam-interface.component.css']
 })
+
 export class ExamInterfaceComponent implements OnInit {
 
   @ViewChild('eform') examFormDirective
@@ -16,7 +22,7 @@ export class ExamInterfaceComponent implements OnInit {
   exam: Exam
   themes=Themes
 
-  formError = {
+  formErrors = {
     'theme': '',
     'nom': '',
     'temps': '',
@@ -24,7 +30,7 @@ export class ExamInterfaceComponent implements OnInit {
 
   }
 
-  validationMessage = {
+  validationMessages = {
     'theme': {
       'required': 'Le thème est obligatoire'
     },
@@ -32,51 +38,96 @@ export class ExamInterfaceComponent implements OnInit {
       'required': 'Le nom est obligatoire'
     },
     'temps': {
-      'required' : 'La durée est obligatoire',
       'pattern' : 'La durée est composée uniquement de chiffres',
-      'max' : 'Durée maximum est 360 minutes'
+      'required' : 'La durée est obligatoire',
+      'max' : 'La durée maximum est 360 minutes',
     },
     'score' : {
-      'required' : 'Le score est obligatoire',
       'pattern' : 'Le score est composé uniquement de chiffres',
-
+      'required' : 'Le score est obligatoire',
+      'min' : 'Le score est une valeur positive'
     }
   }
 
-
-  constructor(private fb: FormBuilder) { 
-    this.createForm()
+  constructor(private router: Router,private fb: FormBuilder) { 
+    
   }
 
   ngOnInit() {
+    this.createForm()
   }
 
   createForm() {
     this.ExamenForm = this.fb.group({
+      newTheme: [''] , 
       theme: ['', Validators.required ],
       nom: ['',Validators.required],
-      score: [0,Validators.required],
-      temps: [0,[Validators.required, Validators.max(360)]],
-      questions: []
+      score: [null,Validators.required],
+      temps: [null,[Validators.required, Validators.max(360)]],
     })
 
-  }
-  onSubmit() {
-    this.exam = this.ExamenForm.value
-    console.log('le theme ' + this.exam.theme)
+    this.ExamenForm.valueChanges.subscribe( data => 
+        this.onValueChanged(data))
+    this.onValueChanged()
 
-    if (!this.themes.includes(this.exam.theme)) {
-      Themes.push(this.exam.theme)
+  }
+
+  onValueChanged(data?:any) {
+    if (!this.ExamenForm) {return ;}
+
+    const form = this.ExamenForm
+
+    for (const field in this.formErrors) {
+      if (this.formErrors.hasOwnProperty(field)) {
+        this.formErrors[field] = ''
+        const control = form.get(field)
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field]
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              this.formErrors[field] +=messages[key] + ''
+            }
+          }
+        }
+      }
     }
-    console.log(this.exam)
+    // this.ExamenForm.get('theme').valueChanges.subscribe(
+    //   selectedTheme => {
+    //     if (this.themes.includes(selectedTheme)) {
+    //       this.ExamenForm.get('nom').reset()
+    //       this.ExamenForm.get('nom').disable()
+    //     }
+    //     else {
+    //       this.ExamenForm.get('nom').enable()
+    //     }
+    //   }
+    // )
+
+  }
+
+  reset() {
     this.ExamenForm.reset({
       theme: '',
       nom: '',
       score: 0,
       temps: 0,
-      questions: []
     })
     this.examFormDirective.resetForm()
+
+  }
+
+
+  onSubmit() {
+    this.exam = this.ExamenForm.value
+    
+    if (!this.themes.includes(this.exam.theme)) {
+      Themes.push(this.exam.theme)
+    }
+    console.log(this.exam)
+    this.router.navigateByUrl('/questions-interface')
+
+    this.reset()
+
   }
 
 }

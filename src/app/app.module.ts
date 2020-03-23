@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material';
+import { QuestionsInterfaceComponent } from './questions-interface/questions-interface.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MatInputModule} from '@angular/material';
     FooterComponent,
     ExamInterfaceComponent,
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    QuestionsInterfaceComponent
   ],
   imports: [
     BrowserModule,

@@ -9,22 +9,26 @@
               <p>
                 <td >
                   <mat-form-field class="form-group">
-                    <input pattern="[a-z,A-Z]*"  required matInput formControlName="nom" 
+                    <input  required matInput formControlName="nom" 
                     placeholder="Saisir nom d'examen" type="text">
-                    <mat-error *ngIf="ExamenForm.get('nom').touched" >Nom requis</mat-error>
+                    <mat-error *ngIf="formErrors.nom" > {{formErrors.nom}} </mat-error>
+                    <mat-error *ngIf="ExamenForm.get('nom').touched &&!formErrors.nom" >Le nom est obligatoire  </mat-error>
+
                   </mat-form-field>
                 </td>
               </p>
 
-              <p>
+              <!-- <p>
                 <td>
                   <mat-form-field class="form-group">
-                    <input  matInput formControlName="theme" 
-                    placeholder="Saisir un nouveau thème" type="text" [(ngModel)]="existe" [value]="theme">
-                    <mat-error *ngIf="themes.includes(value)" >Thème existe dejà. Veuillez consulter la liste ci dessous.</mat-error>
+                    <input  matInput formControlName="newTheme" 
+                    placeholder="Saisir un nouveau thème" type="text">
+                    <mat-error *ngIf="formErrors.theme" > {{formErrors.theme}} </mat-error>
+                    <mat-error *ngIf="ExamenForm.get('theme').touched &&!formErrors.theme" >Le thème est obligatoire  </mat-error>
+
                   </mat-form-field>
                 </td>
-              </p>
+              </p> -->
 
               <p>
                 <td>
@@ -34,34 +38,47 @@
                         {{ theme }}
                       </mat-option>
                     </mat-select>       
-                    <mat-error *ngIf="ExamenForm.get('theme').touched" >Thème requis.</mat-error>     
+                    <mat-error *ngIf="formErrors.theme" > {{formErrors.theme}}</mat-error>     
+                    <mat-error *ngIf="ExamenForm.get('theme').touched &&!formErrors.theme" >Le thème est obligatoire  </mat-error>
+
                   </mat-form-field>
                 </td>
               </p>
 
               <p>
-                <td>
+                <td >
                   <mat-form-field class="form-group">
-                    <input  matInput formControlName="temps" 
-                    placeholder="Saisir la durée" type="number"  required [value]="temps" pattern="[0-9]*">
-                    <mat-error *ngIf="themes.includes(value)" >Thème existe dejà. Veuillez consulter la liste ci dessous.</mat-error>
+                    <input pattern="[0-9]*"  required matInput formControlName="temps" 
+                    placeholder="Saisir durée d'examen" type="number">
+                    <mat-error *ngIf="formErrors.temps" >  {{formErrors.temps}}  </mat-error>
+                    <mat-error *ngIf="ExamenForm.get('temps').touched &&!formErrors.temps" >La durée est obligatoire  </mat-error>
+
                   </mat-form-field>
                 </td>
               </p>
 
               <p>
-                <td>
+                <td >
                   <mat-form-field class="form-group">
-                    <input  matInput formControlName="score" 
-                    placeholder="Saisir le score nécessaire pour réussir" required type="number"  [value]="score" pattern="[0-9]*">
-                    <mat-error *ngIf="themes.includes(value)" >Thème existe dejà. Veuillez consulter la liste ci dessous.</mat-error>
+                    <input pattern="[0-9]*"   required matInput formControlName="score" 
+                    placeholder="Saisir score essentiel pour passer l'examen" type="number">
+                    <mat-error *ngIf="formErrors.score" > {{formErrors.score}}  </mat-error>
+                    <mat-error *ngIf="ExamenForm.get('score').touched &&!formErrors.score" >Le score est obligatoire  </mat-error>
                   </mat-form-field>
                 </td>
               </p>
-
+              <button type="submit"  mat-button class="btn btn-lg btn-block btn-dark " 
+              [disabled]="ExamenForm.invalid">Valider
+              <!-- <a routerLink="/questions-interface" routerLinkActive="active"> Valider</a> -->
+            </button>
+            <button type="button" mat-button class="btn btn-lg btn-block btn-danger " 
+            onclick="reset()" >Reset
+            </button>
             </table>
-            <button type="submit" mat-button class="background-primary" 
-            [disabled]="ExamenForm.invalid">Valider</button>
+            
+
+
+
       </form>
     </div>
 
