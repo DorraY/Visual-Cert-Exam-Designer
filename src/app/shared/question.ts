@@ -1,8 +1,9 @@
 export class Question {
     enonce: string
-    reponse: {
+    reponses: {
         enonce: string,
         correct: boolean
     }[]
     explication: string
+    chapitre: string
 }

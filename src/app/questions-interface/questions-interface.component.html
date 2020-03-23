@@ -1,3 +1,107 @@
-<p>
-  questions-interface works!
-</p>
+
+
+<div class="container my-4">
+  <div class="border border-light p-3 mb-4">
+    <div class="d-flex align-items-center flex-column justify-content-center h-100">
+      <form novalidate [formGroup]="QuestionForm" 
+      (ngSubmit)="onSubmit()" #qform="ngForm">
+            <table class="form-size">
+              <p>
+                <td >
+                  <mat-form-field class="form-group">
+                    <textarea matInput formControlName="question" 
+                    placeholder="Saisir la question" rows="5">  
+                    </textarea>
+                    <mat-error *ngIf="formErrors.question" > {{formErrors.question}} </mat-error>
+                    <mat-error *ngIf="QuestionForm.get('question').touched &&!formErrors.question" >Une question est obligatoire</mat-error>
+
+                  </mat-form-field>
+                </td>
+              </p>
+
+
+
+              <div class="container">
+
+                <div class="row text-center d-flex justify-content-between pt-5 mb-3">
+            
+                  <div class="col-md-2 mb-3">
+                    <h6 class="text-uppercase font-weight-bold">
+            
+                              <mat-form-field class="form-group ">
+                                <textarea matInput formControlName="reponses" 
+                                placeholder="Saisir la réponse" rows="5">  
+                                </textarea>   
+                              </mat-form-field>
+            
+                    </h6>
+                  </div>
+            
+            
+                  <div class="col-md-2 mb-3">
+                    <h6 class="text-uppercase font-weight-bold">
+            
+                              <mat-form-field class="form-group ">
+                                <textarea matInput formControlName="reponses" 
+                                placeholder="Saisir la réponse" rows="5">  
+                                </textarea>   
+                              </mat-form-field>
+            
+                    </h6>
+                  </div>
+
+                  <div class="col-md-2 mb-3">
+                    <h6 class="text-uppercase font-weight-bold">
+            
+                              <mat-form-field class="form-group ">
+                                <textarea matInput formControlName="reponses" 
+                                placeholder="Saisir la réponse" rows="5">  
+                                </textarea>   
+                              </mat-form-field>
+            
+                    </h6>
+                  </div>
+             
+                  <div class="col-md-2 mb-3">
+                    <h6 class="text-uppercase font-weight-bold">
+            
+                              <mat-form-field class="form-group ">
+                                <textarea matInput formControlName="reponses" 
+                                placeholder="Saisir la réponse" rows="5">  
+                                </textarea>   
+                              </mat-form-field>
+    
+                    </h6>
+                  </div>
+            
+                </div>
+              </div>
+            
+            
+            
+              
+
+
+
+
+
+
+              <button type="submit"  mat-button class="btn btn-lg btn-block btn-dark " 
+              [disabled]="QuestionForm.invalid">Finir
+            </button>
+            <button type="button" mat-button class="btn btn-lg btn-block btn-danger " 
+            onclick="reset()" >Reset question
+            </button> 
+            <button type="button" mat-button class="btn btn-lg btn-block btn-success " 
+            onclick="reset()" >Ajouter question
+            </button> 
+            </table>
+            
+
+
+
+      </form>
+    </div>
+
+  </div>
+</div>
