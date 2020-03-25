@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, Input, Directive } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Directive, ElementRef, Renderer2 } from '@angular/core';
 import {Router} from '@angular/router'
 
 
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import {Themes,Exam} from '../shared/exam'
 import {Question} from '../shared/question'
 
@@ -17,12 +17,17 @@ import {routes} from '../app-routing/routes'
 
 export class ExamInterfaceComponent implements OnInit {
 
+
+
+
   @ViewChild('eform') examFormDirective
+  @ViewChild('nouveauTheme') nouveauTheme: ElementRef
   ExamenForm: FormGroup
   exam: Exam
   themes=Themes
 
   formErrors = {
+    'newTheme': '',
     'theme': '',
     'nom': '',
     'temps': '',
@@ -31,6 +36,10 @@ export class ExamInterfaceComponent implements OnInit {
   }
 
   validationMessages = {
+    'newTheme': {
+      'newThemeValidator' : 'dsds'
+    } , 
+
     'theme': {
       'required': 'Le thème est obligatoire'
     },
@@ -49,7 +58,7 @@ export class ExamInterfaceComponent implements OnInit {
     }
   }
 
-  constructor(private router: Router,private fb: FormBuilder) { 
+  constructor(private renderer: Renderer2, private router: Router,private fb: FormBuilder) { 
     
   }
 
@@ -57,9 +66,17 @@ export class ExamInterfaceComponent implements OnInit {
     this.createForm()
   }
 
+newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  console.log(control.value!==undefined)
+  if (Themes.includes(control.value) ) {
+      return { 'newTheme': true };
+  }
+  return null;
+}
+
   createForm() {
     this.ExamenForm = this.fb.group({
-      newTheme: [''] , 
+      newTheme: new FormControl('', [this.newThemeValidator]),
       theme: ['', Validators.required ],
       nom: ['',Validators.required],
       score: [null,Validators.required],
@@ -72,21 +89,31 @@ export class ExamInterfaceComponent implements OnInit {
 
   }
 
+  CreateNewTheme() {
+    let newInput = this.renderer.createElement('div')
+    this.nouveauTheme.nativeElement.innerHTML = '<input>'
+    this.renderer.appendChild(this.nouveauTheme.nativeElement,newInput)
+  }
+
   onValueChanged(data?:any) {
     if (!this.ExamenForm) {return ;}
 
-    const form = this.ExamenForm
 
+    const form = this.ExamenForm
+    
     for (const field in this.formErrors) {
+
       if (this.formErrors.hasOwnProperty(field)) {
+        
         this.formErrors[field] = ''
         const control = form.get(field)
         if (control && control.dirty && !control.valid) {
           const messages = this.validationMessages[field]
           for (const key in control.errors) {
             if (control.errors.hasOwnProperty(key)) {
+               console.log(control.errors) 
               this.formErrors[field] +=messages[key] + ''
-            }
+            } 
           }
         }
       }
@@ -107,6 +134,7 @@ export class ExamInterfaceComponent implements OnInit {
 
   reset() {
     this.ExamenForm.reset({
+      newTheme: '',
       theme: '',
       nom: '',
       score: 0,
@@ -116,18 +144,19 @@ export class ExamInterfaceComponent implements OnInit {
 
   }
 
-
   onSubmit() {
     this.exam = this.ExamenForm.value
     
-    if (!this.themes.includes(this.exam.theme)) {
-      Themes.push(this.exam.theme)
+    if (!this.themes.includes(this.exam[Object.keys(this.exam)[0]])) {
+      Themes.push(this.exam[Object.keys(this.exam)[0]])
     }
     console.log(this.exam)
+    console.log(Themes)
     this.router.navigateByUrl('/questions-interface')
 
     this.reset()
 
   }
+  
 
 }
