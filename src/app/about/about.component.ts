@@ -9,13 +9,12 @@ import {MatDialog, MatDialogRef} from '@angular/material';
 export class AboutComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AboutComponent>  ) { }
-
   ngOnInit() {
-    console.log('created')
   }
+
+
   ngOnDestroy()	{
     this.dialogRef.close()
-
   }
 
   

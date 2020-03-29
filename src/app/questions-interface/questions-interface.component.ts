@@ -18,6 +18,7 @@ export class QuestionsInterfaceComponent implements OnInit {
   exam: Exam
   themes=Themes
   question: Question
+  questions: Question[]
 
   formErrors = {
     'question': '',
@@ -60,19 +61,34 @@ export class QuestionsInterfaceComponent implements OnInit {
 
       question: ['', Validators.required ],
       reponses: this.fb.group({
-        reponse1: ['',Validators.required],
-        reponse2: ['',Validators.required],
-        reponse3: ['',Validators.required],
-        reponse4: ['',Validators.required],
+        reponse1: this.fb.group(
+          {
+            enonce1: ['',Validators.required],
+            reponseCorrecte1: ['']
+          }
+        ),
+        reponse2: this.fb.group(
+          {
+            enonce2: ['',Validators.required],
+            reponseCorrecte2: ['']
+          }
+        ),
+        reponse3: this.fb.group(
+          {
+            enonce3: ['',Validators.required],
+            reponseCorrecte3: ['']
+          }
+        ),
+        reponse4: this.fb.group(
+          {
+            enonce4: ['',Validators.required],
+            reponseCorrecte4: ['']
+          }
+        ),
       }),
       explication: ['',Validators.required],
       chapitre: ['',[Validators.required]]
-      // reponseCorrecte: this.fb.group({
-      //   reponseCorrecte1: ['',Validators.required],
-      //   reponseCorrecte2: ['',Validators.required],
-      //   reponseCorrecte3: ['',Validators.required],
-      //   reponseCorrecte4: ['',Validators.required],
-      // })
+
     })
 
     this.QuestionForm.valueChanges.subscribe( data => 
@@ -109,7 +125,7 @@ export class QuestionsInterfaceComponent implements OnInit {
       explication: '',
       chapitre: '',
       reponses: '',
-      // reponseCorrecte: ''
+      reponseCorrecte: ''
 
     })
     this.examFormDirective.resetForm()
@@ -120,7 +136,6 @@ export class QuestionsInterfaceComponent implements OnInit {
   onSubmit() {
     this.question = this.QuestionForm.value
     console.log(this.question)
-    
 
     this.reset()
 

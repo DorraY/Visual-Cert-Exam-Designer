@@ -25,6 +25,7 @@ import {MatInputModule} from '@angular/material';
 import { MatDialogModule,MatDialogRef } from '@angular/material/dialog';
 
 import {MatButtonModule} from '@angular/material/button';
+import { AideComponent } from './aide/aide.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {MatButtonModule} from '@angular/material/button';
     HomeComponent,
     HeaderComponent,
     QuestionsInterfaceComponent,
-    AboutComponent
+    AboutComponent,
+    AideComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,7 @@ import {MatButtonModule} from '@angular/material/button';
 
   ],
   entryComponents: [
-    AboutComponent
+    AboutComponent,AideComponent
   ],
   providers: [{
     provide: MatDialogRef,

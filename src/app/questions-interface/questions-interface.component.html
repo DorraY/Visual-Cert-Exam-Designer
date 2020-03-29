@@ -1,5 +1,4 @@
 
-
 <div class="container my-4">
   <div class="border border-light p-3 mb-4">
     <div class="d-flex align-items-center flex-column justify-content-center h-100">
@@ -63,59 +62,63 @@
               
               <div class="container" formGroupName="reponses">
                 <div class="row text-center d-flex justify-content-between pt-5 mb-3">
-                  <div class="col-md-2 mb-3">
+                  <div class="col-md-2 mb-3" formGroupName="reponse1">
                     <h6 class="font-weight-bold">
                               <label for="">Réponse 1</label>
                               <mat-form-field class="form-group ">
-                                <textarea matInput formControlName="reponse1" 
+                                <textarea required matInput formControlName="enonce1" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
+                                <!-- <mat-error *ngIf="QuestionForm.get('enonce1').touched">dada</mat-error> -->
+                                <mat-error *ngIf="formErrors.reponses">  {{formErrors.reponses}}    </mat-error>
                               </mat-form-field>
-                              <!-- <input formGroupName="reponseCorrecte" formControlName="reponseCorrecte1" type="checkbox" name="Rep1"  > -->
+                              <input  formControlName="reponseCorrecte1" type="checkbox" name="Rep1"  >
+
                     </h6>
                   </div>
             
-                  <div class="col-md-2 mb-3">
+                  <div class="col-md-2 mb-3" formGroupName="reponse2">
                     <h6 class="font-weight-bold">
                               <label for="">Réponse 2</label>
                               <mat-form-field class="form-group ">
-                                <textarea matInput formControlName="reponse2" 
+                                <textarea  required matInput formControlName="enonce2" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
                               </mat-form-field>
-                              <!-- <input formGroupName="reponseCorrecte" formControlName="reponseCorrecte2" type="checkbox" name="Rep2"  > -->
+                              <input formControlName="reponseCorrecte2" type="checkbox" name="Rep2"  >
+
 
 
             
                     </h6>
                   </div>
 
-                  <div class="col-md-2 mb-3">
+                  <div class="col-md-2 mb-3" formGroupName="reponse3">
                     <h6 class="font-weight-bold">
                       <label for="">Réponse 3</label>
                               <mat-form-field class="form-group ">
-                                <textarea matInput formControlName="reponse3" 
+                                <textarea required matInput formControlName="enonce3" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
-                                
+
                               </mat-form-field>
-                              <!-- <input formGroupName="reponseCorrecte" formControlName="reponseCorrecte3" type="checkbox" name="Rep3"  > -->
+                              <input  formControlName="reponseCorrecte3" type="checkbox" name="Rep3"  >
+
 
             
                     </h6>
                   </div>
              
-                  <div class="col-md-2 mb-3">
+                  <div class="col-md-2 mb-3" formGroupName="reponse4">
                     <h6 class="font-weight-bold">
                       <label for="">Réponse 4</label>
 
                               <mat-form-field class="form-group ">
-                                <textarea matInput formControlName="reponse4" 
+                                <textarea required matInput formControlName="enonce4" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
                               </mat-form-field>
-                              <!-- <input formGroupName="reponseCorrecte" formControlName="reponseCorrecte4" type="checkbox" name="Rep4"  > -->
-
+                              <input  formControlName="reponseCorrecte4" type="checkbox" name="Rep4"  >
     
                     </h6>
                   </div>
@@ -143,19 +146,15 @@
                   </div>
              
                   <div class="col-md-2 mb-3">
-                        <button type="submit" mat-button class="btn btn-lg btn-block btn-success " 
-                         >Ajout question
+                        <button type="submit" mat-button 
+                        class="btn btn-lg btn-block btn-success " 
+                        [disabled]="QuestionForm.invalid" >Ajout question
                         </button> 
                   </div>
-            
                 </div>
               </div>
-
             </table>
-            
-
       </form>
     </div>
-
   </div>
 </div>
