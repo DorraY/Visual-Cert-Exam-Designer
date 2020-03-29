@@ -6,47 +6,85 @@
       <form novalidate [formGroup]="QuestionForm" 
       (ngSubmit)="onSubmit()" #qform="ngForm">
             <table class="form-size">
-              <p>
-                <td >
-                  <mat-form-field class="form-group">
-                    <textarea matInput formControlName="question" 
-                    placeholder="Saisir la question"  rows="10">  
-                    </textarea>
-                    <mat-error *ngIf="formErrors.question" > {{formErrors.question}} </mat-error>
-                    <mat-error *ngIf="QuestionForm.get('question').touched &&!formErrors.question" >Une question est obligatoire</mat-error>
-
-                  </mat-form-field>
-                </td>
-              </p>
-
-
 
               <div class="container">
 
                 <div class="row text-center d-flex justify-content-between pt-5 mb-3">
             
                   <div class="col-md-2 mb-3">
+                    <p> 
+                      <td >
+                        <mat-form-field class="form-group">
+                          <textarea matInput formControlName="question" 
+                          placeholder="Question"  rows="10">  
+                          </textarea>
+                          <mat-error *ngIf="formErrors.question" > {{formErrors.question}} </mat-error>
+                          <mat-error *ngIf="QuestionForm.get('question').touched &&!formErrors.question" >Une question est obligatoire</mat-error>
+                        </mat-form-field>
+                      </td>
+                    </p>
+                  </div>
+            
+                  <div class="col-md-2 mb-3">
+                    <p>
+                      <td >
+                        <mat-form-field class="form-group">
+                          <input  required matInput formControlName="chapitre" 
+                          placeholder="Chapitre" type="text">
+                          <mat-error *ngIf="formErrors.chapitre" > {{formErrors.chapitre}} </mat-error>
+                          <mat-error *ngIf="QuestionForm.get('chapitre').touched &&!formErrors.chapitre" >Un chapitre est obligatoire</mat-error>
+                        </mat-form-field>
+                      </td>
+                    </p>
+                  </div>
+             
+                  <div class="col-md-2 mb-3">
+                    <p>
+                      <td >
+                        <mat-form-field class="form-group">
+                          <textarea matInput formControlName="explication" 
+                          placeholder="Explication"  rows="10">  
+                          </textarea>
+
+                          <mat-error *ngIf="formErrors.explication" > {{formErrors.explication}} </mat-error>
+                          <mat-error *ngIf="QuestionForm.get('explication').touched &&!formErrors.explication" >Une explication est obligatoire</mat-error>
+                        </mat-form-field>
+                      </td>
+                    </p>
+                  </div>
+            
+                </div>
+              </div>
+
+
+
+
+
+              
+              <div class="container" formGroupName="reponses">
+                <div class="row text-center d-flex justify-content-between pt-5 mb-3">
+                  <div class="col-md-2 mb-3">
                     <h6 class="font-weight-bold">
                               <label for="">Réponse 1</label>
                               <mat-form-field class="form-group ">
-                                <textarea matInput formControlName="reponses" 
+                                <textarea matInput formControlName="reponse1" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
                               </mat-form-field>
-
-            
+                              <!-- <input formGroupName="reponseCorrecte" formControlName="reponseCorrecte1" type="checkbox" name="Rep1"  > -->
                     </h6>
                   </div>
-            
             
                   <div class="col-md-2 mb-3">
                     <h6 class="font-weight-bold">
                               <label for="">Réponse 2</label>
                               <mat-form-field class="form-group ">
-                                <textarea matInput formControlName="reponses" 
+                                <textarea matInput formControlName="reponse2" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
                               </mat-form-field>
+                              <!-- <input formGroupName="reponseCorrecte" formControlName="reponseCorrecte2" type="checkbox" name="Rep2"  > -->
+
 
             
                     </h6>
@@ -56,10 +94,12 @@
                     <h6 class="font-weight-bold">
                       <label for="">Réponse 3</label>
                               <mat-form-field class="form-group ">
-                                <textarea matInput formControlName="reponses" 
+                                <textarea matInput formControlName="reponse3" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
+                                
                               </mat-form-field>
+                              <!-- <input formGroupName="reponseCorrecte" formControlName="reponseCorrecte3" type="checkbox" name="Rep3"  > -->
 
             
                     </h6>
@@ -70,16 +110,20 @@
                       <label for="">Réponse 4</label>
 
                               <mat-form-field class="form-group ">
-                                <textarea matInput formControlName="reponses" 
+                                <textarea matInput formControlName="reponse4" 
                                 placeholder="Saisir la réponse" rows="5">  
                                 </textarea>   
                               </mat-form-field>
+                              <!-- <input formGroupName="reponseCorrecte" formControlName="reponseCorrecte4" type="checkbox" name="Rep4"  > -->
+
     
                     </h6>
                   </div>
             
                 </div>
               </div>
+
+              
 
               <div class="container">
 
@@ -99,8 +143,8 @@
                   </div>
              
                   <div class="col-md-2 mb-3">
-                        <button type="button" mat-button class="btn btn-lg btn-block btn-success " 
-                        onclick="reset()" >Ajout question
+                        <button type="submit" mat-button class="btn btn-lg btn-block btn-success " 
+                         >Ajout question
                         </button> 
                   </div>
             

@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Directive, ElementRef, Renderer2 } from '@angular/core';
 import {Router} from '@angular/router'
 
-
-
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import {Themes,Exam} from '../shared/exam'
 import {Question} from '../shared/question'
@@ -118,17 +116,7 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
         }
       }
     }
-    // this.ExamenForm.get('theme').valueChanges.subscribe(
-    //   selectedTheme => {
-    //     if (this.themes.includes(selectedTheme)) {
-    //       this.ExamenForm.get('nom').reset()
-    //       this.ExamenForm.get('nom').disable()
-    //     }
-    //     else {
-    //       this.ExamenForm.get('nom').enable()
-    //     }
-    //   }
-    // )
+
 
   }
 

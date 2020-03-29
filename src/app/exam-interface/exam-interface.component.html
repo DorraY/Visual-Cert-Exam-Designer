@@ -18,17 +18,7 @@
                 </td>
               </p>
 
-              <!-- <p>
-                <td>
-                  <mat-form-field class="form-group">
-                    <input  matInput formControlName="newTheme" 
-                    placeholder="Saisir un nouveau thème" type="text">
-                    <mat-error *ngIf="formErrors.theme" > {{formErrors.theme}} </mat-error>
-                    <mat-error *ngIf="ExamenForm.get('theme').touched &&!formErrors.theme" >Le thème est obligatoire  </mat-error>
 
-                  </mat-form-field>
-                </td>
-              </p> -->
 
               <p>
                 <td>
@@ -46,18 +36,15 @@
                 </td>
 
               </p>
-              <p>
-                <mat-form-field class="form-group">
 
+              <!-- <p>
+                <mat-form-field class="form-group">
                 <input newThemeValidator required matInput formControlName="newTheme" 
                 placeholder="Nouveau thème" type="text">
                 <mat-error *ngIf="formErrors.newTheme" >Thème existe déjà</mat-error>
-
               </mat-form-field>
-
-                </p>
+              </p> -->
               
- 
               <p>
                 <td >
                   <mat-form-field class="form-group">

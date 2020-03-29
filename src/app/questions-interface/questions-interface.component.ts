@@ -23,7 +23,8 @@ export class QuestionsInterfaceComponent implements OnInit {
     'question': '',
     'reponses': '',
     'explication': '',
-    'chapitre': ''
+    'chapitre': '',
+    'reponseCorrecte': ''
 
   }
 
@@ -34,16 +35,16 @@ export class QuestionsInterfaceComponent implements OnInit {
     'reponses': {
       'required': 'Une réponse est obligatoire'
     },
-    'temps': {
-      'pattern' : 'La durée est composée uniquement de chiffres',
-      'required' : 'La durée est obligatoire',
-      'max' : 'La durée maximum est 360 minutes',
+    'explication': {
+      'required': 'Une explication est obligatoire'
     },
-    'score' : {
-      'pattern' : 'Le score est composé uniquement de chiffres',
-      'required' : 'Le score est obligatoire',
-      'min' : 'Le score est une valeur positive'
-    }
+    'chapitre': {
+      'required': 'Un chapitre est obligatoire'
+    },
+    'reponseCorrecte': {
+      'required': 'Au moins une réponse correcte est obligatoire'
+    },
+
   }
 
   constructor(private router: Router,private fb: FormBuilder) { 
@@ -58,9 +59,20 @@ export class QuestionsInterfaceComponent implements OnInit {
     this.QuestionForm = this.fb.group({
 
       question: ['', Validators.required ],
-      reponses: ['',Validators.required],
+      reponses: this.fb.group({
+        reponse1: ['',Validators.required],
+        reponse2: ['',Validators.required],
+        reponse3: ['',Validators.required],
+        reponse4: ['',Validators.required],
+      }),
       explication: ['',Validators.required],
       chapitre: ['',[Validators.required]]
+      // reponseCorrecte: this.fb.group({
+      //   reponseCorrecte1: ['',Validators.required],
+      //   reponseCorrecte2: ['',Validators.required],
+      //   reponseCorrecte3: ['',Validators.required],
+      //   reponseCorrecte4: ['',Validators.required],
+      // })
     })
 
     this.QuestionForm.valueChanges.subscribe( data => 
@@ -88,26 +100,17 @@ export class QuestionsInterfaceComponent implements OnInit {
         }
       }
     }
-    // this.QuestionForm.get('theme').valueChanges.subscribe(
-    //   selectedTheme => {
-    //     if (this.themes.includes(selectedTheme)) {
-    //       this.QuestionForm.get('nom').reset()
-    //       this.QuestionForm.get('nom').disable()
-    //     }
-    //     else {
-    //       this.QuestionForm.get('nom').enable()
-    //     }
-    //   }
-    // )
 
   }
 
   reset() {
     this.QuestionForm.reset({
-      theme: '',
-      nom: '',
-      score: 0,
-      temps: 0,
+      question: '',
+      explication: '',
+      chapitre: '',
+      reponses: '',
+      // reponseCorrecte: ''
+
     })
     this.examFormDirective.resetForm()
 
@@ -116,8 +119,7 @@ export class QuestionsInterfaceComponent implements OnInit {
 
   onSubmit() {
     this.question = this.QuestionForm.value
-    
-    
+    console.log(this.question)
     
 
     this.reset()
