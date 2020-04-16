@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
 import {Themes,Exam} from '../shared/exam'
 import {Question} from '../shared/question'
 
-import {routes} from '../app-routing/routes'
+import {DataShareService} from '../services/data-share.service'
 
 @Component({
   selector: 'app-exam-interface',
@@ -16,7 +16,7 @@ import {routes} from '../app-routing/routes'
 export class ExamInterfaceComponent implements OnInit {
 
 
-
+  message: string
 
   @ViewChild('eform') examFormDirective
   @ViewChild('nouveauTheme') nouveauTheme: ElementRef
@@ -35,7 +35,7 @@ export class ExamInterfaceComponent implements OnInit {
 
   validationMessages = {
     'newTheme': {
-      'newThemeValidator' : 'dsds'
+      'newThemeValidator' : ''
     } , 
 
     'theme': {
@@ -56,13 +56,20 @@ export class ExamInterfaceComponent implements OnInit {
     }
   }
 
-  constructor(private renderer: Renderer2, private router: Router,private fb: FormBuilder) { 
+  constructor(private data: DataShareService,private renderer: Renderer2, private router: Router,private fb: FormBuilder) { 
     
   }
 
   ngOnInit() {
     this.createForm()
+    this.data.currentMessage.subscribe(message => this.message = message)
   }
+
+  newMessage() {
+    this.data.changeMessage("hello from exam")
+  }
+
+
 
 newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
   console.log(control.value!==undefined)
@@ -87,16 +94,8 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
 
   }
 
-  CreateNewTheme() {
-    let newInput = this.renderer.createElement('div')
-    this.nouveauTheme.nativeElement.innerHTML = '<input>'
-    this.renderer.appendChild(this.nouveauTheme.nativeElement,newInput)
-  }
-
   onValueChanged(data?:any) {
     if (!this.ExamenForm) {return ;}
-
-
     const form = this.ExamenForm
     
     for (const field in this.formErrors) {
@@ -139,9 +138,8 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
       Themes.push(this.exam[Object.keys(this.exam)[0]])
     }
     console.log(this.exam)
-    console.log(Themes)
+    this.newMessage()
     this.router.navigateByUrl('/questions-interface')
-
     this.reset()
 
   }

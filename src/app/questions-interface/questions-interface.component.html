@@ -67,10 +67,9 @@
                               <label for="">Réponse 1</label>
                               <mat-form-field class="form-group ">
                                 <textarea required matInput formControlName="enonce1" 
-                                placeholder="Saisir la réponse" rows="5">  
+                                 rows="5">  
                                 </textarea>   
-                                <!-- <mat-error *ngIf="QuestionForm.get('enonce1').touched">dada</mat-error> -->
-                                <mat-error *ngIf="formErrors.reponses">  {{formErrors.reponses}}    </mat-error>
+                                
                               </mat-form-field>
                               <input  formControlName="reponseCorrecte1" type="checkbox" name="Rep1"  >
 
@@ -82,7 +81,7 @@
                               <label for="">Réponse 2</label>
                               <mat-form-field class="form-group ">
                                 <textarea  required matInput formControlName="enonce2" 
-                                placeholder="Saisir la réponse" rows="5">  
+                                 rows="5">  
                                 </textarea>   
                               </mat-form-field>
                               <input formControlName="reponseCorrecte2" type="checkbox" name="Rep2"  >
@@ -98,7 +97,7 @@
                       <label for="">Réponse 3</label>
                               <mat-form-field class="form-group ">
                                 <textarea required matInput formControlName="enonce3" 
-                                placeholder="Saisir la réponse" rows="5">  
+                                 rows="5">  
                                 </textarea>   
 
                               </mat-form-field>
@@ -115,7 +114,7 @@
 
                               <mat-form-field class="form-group ">
                                 <textarea required matInput formControlName="enonce4" 
-                                placeholder="Saisir la réponse" rows="5">  
+                                 rows="5">  
                                 </textarea>   
                               </mat-form-field>
                               <input  formControlName="reponseCorrecte4" type="checkbox" name="Rep4"  >

@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Themes,Exam} from '../shared/exam'
 import {Question} from '../shared/question'
 
-import {routes} from '../app-routing/routes'
+import {DataShareService} from '../services/data-share.service'
 
 @Component({
   selector: 'app-questions-interface',
@@ -19,6 +19,8 @@ export class QuestionsInterfaceComponent implements OnInit {
   themes=Themes
   question: Question
   questions: Question[]
+
+  message: string
 
   formErrors = {
     'question': '',
@@ -48,12 +50,13 @@ export class QuestionsInterfaceComponent implements OnInit {
 
   }
 
-  constructor(private router: Router,private fb: FormBuilder) { 
+  constructor(private data:DataShareService,private router: Router,private fb: FormBuilder) { 
     
   }
 
   ngOnInit() {
     this.createForm()
+    this.data.currentMessage.subscribe(message=> this.message=this.message)
   }
 
   createForm() {
@@ -136,6 +139,7 @@ export class QuestionsInterfaceComponent implements OnInit {
   onSubmit() {
     this.question = this.QuestionForm.value
     console.log(this.question)
+    console.log(this.message)
 
     this.reset()
 
