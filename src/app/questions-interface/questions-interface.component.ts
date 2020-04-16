@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Directive } from '@angular/core';
 import {Router} from '@angular/router'
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import {Themes,Exam} from '../shared/exam'
 import {Question} from '../shared/question'
 
@@ -13,7 +13,7 @@ import {DataShareService} from '../services/data-share.service'
   styleUrls: ['./questions-interface.component.css']
 })
 export class QuestionsInterfaceComponent implements OnInit {
-  @ViewChild('qform') examFormDirective
+  @ViewChild('qform') questionFormDirective
   QuestionForm: FormGroup
   exam: Exam
   themes=Themes
@@ -27,7 +27,7 @@ export class QuestionsInterfaceComponent implements OnInit {
     'reponses': '',
     'explication': '',
     'chapitre': '',
-    'reponseCorrecte': ''
+    // 'reponseCorrecte': ''
 
   }
 
@@ -43,9 +43,6 @@ export class QuestionsInterfaceComponent implements OnInit {
     },
     'chapitre': {
       'required': 'Un chapitre est obligatoire'
-    },
-    'reponseCorrecte': {
-      'required': 'Au moins une réponse correcte est obligatoire'
     },
 
   }
@@ -63,32 +60,12 @@ export class QuestionsInterfaceComponent implements OnInit {
     this.QuestionForm = this.fb.group({
 
       question: ['', Validators.required ],
-      reponses: this.fb.group({
-        reponse1: this.fb.group(
-          {
-            enonce1: ['',Validators.required],
-            reponseCorrecte1: ['']
-          }
-        ),
-        reponse2: this.fb.group(
-          {
-            enonce2: ['',Validators.required],
-            reponseCorrecte2: ['']
-          }
-        ),
-        reponse3: this.fb.group(
-          {
-            enonce3: ['',Validators.required],
-            reponseCorrecte3: ['']
-          }
-        ),
-        reponse4: this.fb.group(
-          {
-            enonce4: ['',Validators.required],
-            reponseCorrecte4: ['']
-          }
-        ),
-      }),
+      reponses: this.fb.array([
+        this.fb.group({
+          enonce: ['',Validators.required],
+          reponseCorrecte: ['']
+        })
+      ]),
       explication: ['',Validators.required],
       chapitre: ['',[Validators.required]]
 
@@ -99,6 +76,18 @@ export class QuestionsInterfaceComponent implements OnInit {
     this.onValueChanged()
 
   }
+
+  get reponses() {
+    return this.QuestionForm.get('reponses') as FormArray
+  }
+
+  ajoutReponse() {
+    this.reponses.push(this.fb.group({
+      enonce: ['',Validators.required],
+      reponseCorrecte: ['']}))
+  }
+
+  *
 
   onValueChanged(data?:any) {
     if (!this.QuestionForm) {return ;}
@@ -131,7 +120,7 @@ export class QuestionsInterfaceComponent implements OnInit {
       reponseCorrecte: ''
 
     })
-    this.examFormDirective.resetForm()
+    this.questionFormDirective.resetForm()
 
   }
 

@@ -60,68 +60,24 @@
 
 
               
-              <div class="container" formGroupName="reponses">
+              <div class="container" >
                 <div class="row text-center d-flex justify-content-between pt-5 mb-3">
-                  <div class="col-md-2 mb-3" formGroupName="reponse1">
+                  <div class="col-md-2 mb-3" formArrayName="reponses">
+                    <div class="row" *ngFor="let item of reponses.controls;
+                    let ReponseIndex=index" [formGroupName]="ReponseIndex">
+
                     <h6 class="font-weight-bold">
-                              <label for="">Réponse 1</label>
-                              <mat-form-field class="form-group ">
-                                <textarea required matInput formControlName="enonce1" 
-                                 rows="5">  
-                                </textarea>   
-                                
-                              </mat-form-field>
-                              <input  formControlName="reponseCorrecte1" type="checkbox" name="Rep1"  >
-
-                    </h6>
+                      <label for="">Réponse {{ReponseIndex +1 }} </label>
+                      <mat-form-field class="form-group ">
+                        <textarea required matInput formControlName="enonce" 
+                         rows="5">  
+                        </textarea>   
+                      </mat-form-field>
+                      <input  formControlName="reponseCorrecte" type="checkbox" name="Rep1"  > 
+                      </h6>
+                      
+                    </div>
                   </div>
-            
-                  <div class="col-md-2 mb-3" formGroupName="reponse2">
-                    <h6 class="font-weight-bold">
-                              <label for="">Réponse 2</label>
-                              <mat-form-field class="form-group ">
-                                <textarea  required matInput formControlName="enonce2" 
-                                 rows="5">  
-                                </textarea>   
-                              </mat-form-field>
-                              <input formControlName="reponseCorrecte2" type="checkbox" name="Rep2"  >
-
-
-
-            
-                    </h6>
-                  </div>
-
-                  <div class="col-md-2 mb-3" formGroupName="reponse3">
-                    <h6 class="font-weight-bold">
-                      <label for="">Réponse 3</label>
-                              <mat-form-field class="form-group ">
-                                <textarea required matInput formControlName="enonce3" 
-                                 rows="5">  
-                                </textarea>   
-
-                              </mat-form-field>
-                              <input  formControlName="reponseCorrecte3" type="checkbox" name="Rep3"  >
-
-
-            
-                    </h6>
-                  </div>
-             
-                  <div class="col-md-2 mb-3" formGroupName="reponse4">
-                    <h6 class="font-weight-bold">
-                      <label for="">Réponse 4</label>
-
-                              <mat-form-field class="form-group ">
-                                <textarea required matInput formControlName="enonce4" 
-                                 rows="5">  
-                                </textarea>   
-                              </mat-form-field>
-                              <input  formControlName="reponseCorrecte4" type="checkbox" name="Rep4"  >
-    
-                    </h6>
-                  </div>
-            
                 </div>
               </div>
 
@@ -143,6 +99,11 @@
                         onclick="reset()" >Reset question
                         </button> 
                   </div>
+
+                  <div class="col-md-2 mb-3">
+                    <button (click)="ajoutReponse()" type="button" mat-button class="btn btn-lg  btn-block btn-secondary " >Ajout réponse
+                    </button> 
+              </div>
              
                   <div class="col-md-2 mb-3">
                         <button type="submit" mat-button 
