@@ -87,6 +87,10 @@ export class QuestionsInterfaceComponent implements OnInit {
       reponseCorrecte: ['']}))
   }
 
+  supprimerReponse(index) {
+    this.reponses.removeAt(index)
+  }
+
   *
 
   onValueChanged(data?:any) {

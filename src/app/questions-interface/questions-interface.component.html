@@ -62,20 +62,20 @@
               
               <div class="container" >
                 <div class="row text-center d-flex justify-content-between pt-5 mb-3">
-                  <div class="col-md-2 mb-3" formArrayName="reponses">
-                    <div class="row" *ngFor="let item of reponses.controls;
+                  <div class="row" formArrayName="reponses">
+                    <div  *ngFor="let item of reponses.controls;
                     let ReponseIndex=index" [formGroupName]="ReponseIndex">
 
-                    <h6 class="font-weight-bold">
+                    <h6 class="row font-weight-bold">
                       <label for="">Réponse {{ReponseIndex +1 }} </label>
-                      <mat-form-field class="form-group ">
+                      <mat-form-field class="form-group">
+                        <input  formControlName="reponseCorrecte" type="checkbox" name="Rep1"  > 
                         <textarea required matInput formControlName="enonce" 
                          rows="5">  
                         </textarea>   
                       </mat-form-field>
-                      <input  formControlName="reponseCorrecte" type="checkbox" name="Rep1"  > 
                       </h6>
-                      
+
                     </div>
                   </div>
                 </div>
@@ -103,7 +103,7 @@
                   <div class="col-md-2 mb-3">
                     <button (click)="ajoutReponse()" type="button" mat-button class="btn btn-lg  btn-block btn-secondary " >Ajout réponse
                     </button> 
-              </div>
+                  </div>
              
                   <div class="col-md-2 mb-3">
                         <button type="submit" mat-button 
@@ -111,6 +111,12 @@
                         [disabled]="QuestionForm.invalid" >Ajout question
                         </button> 
                   </div>
+
+                  <div class="col-md-2 mb-3">
+                    <button type="button" mat-button (click)="supprimerReponse(ReponseIndex+1)"
+                    class="btn btn-lg btn-block btn-danger " >Supprimer réponse
+                    </button> 
+              </div>
                 </div>
               </div>
             </table>
