@@ -67,7 +67,7 @@ export class QuestionsInterfaceComponent implements OnInit {
       reponses: this.fb.array([
         this.fb.group({
           enonce: ['',Validators.required],
-          reponseCorrecte: ['']
+          reponseCorrecte: [''],
         })
       ]),
       explication: ['',Validators.required],
@@ -90,7 +90,6 @@ export class QuestionsInterfaceComponent implements OnInit {
       enonce: ['',Validators.required],
       reponseCorrecte: ['']}))
   }
-
   supprimerReponse(index) {
     this.reponses.removeAt(index)
   }
@@ -134,6 +133,7 @@ export class QuestionsInterfaceComponent implements OnInit {
 
 
   onSubmit() {
+    this.questionId++
     this.question = this.QuestionForm.value
     this.questions.push(this.question)
     console.log(this.questions)
@@ -142,10 +142,18 @@ export class QuestionsInterfaceComponent implements OnInit {
 
   }
   onSubmitExam() {
-    console.log("clicked")
+    this.questionId++
+    
     this.question = this.QuestionForm.value
     this.questions.push(this.question)
     
+    for (let i=0;i<this.questions.length;i++) {
+      this.questions[i].questionId=i+1
+      for (let j=0;j<this.questions[i].reponses.length;j++) {
+        this.questions[i].reponses[j].reponseId=j+1
+      }
+    }
+
     console.log(this.questions)
     this.router.navigateByUrl('/finished')
 
