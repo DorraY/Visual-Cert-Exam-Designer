@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Directive } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {Router} from '@angular/router'
 
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
@@ -18,8 +18,9 @@ export class QuestionsInterfaceComponent implements OnInit {
   exam: Exam
   themes=Themes
   question: Question
-  questions: Question[]
-
+  questions: Question[]= []
+  DataShare: DataShareService
+  
   message: string
 
   formErrors = {
@@ -27,7 +28,6 @@ export class QuestionsInterfaceComponent implements OnInit {
     'reponses': '',
     'explication': '',
     'chapitre': '',
-    // 'reponseCorrecte': ''
 
   }
 
@@ -46,14 +46,18 @@ export class QuestionsInterfaceComponent implements OnInit {
     },
 
   }
+  message$: any;
 
-  constructor(private data:DataShareService,private router: Router,private fb: FormBuilder) { 
+  constructor(private router: Router,private dataShare: DataShareService, private fb: FormBuilder) { 
+    this.message$ = this.dataShare.getData()
+    console.log(this.message$)
+    
+
     
   }
 
   ngOnInit() {
     this.createForm()
-    this.data.currentMessage.subscribe(message=> this.message=this.message)
   }
 
   createForm() {
@@ -72,7 +76,7 @@ export class QuestionsInterfaceComponent implements OnInit {
     })
 
     this.QuestionForm.valueChanges.subscribe( data => 
-        this.onValueChanged(data))
+        this.onValueChanged())
     this.onValueChanged()
 
   }
@@ -93,7 +97,7 @@ export class QuestionsInterfaceComponent implements OnInit {
 
   *
 
-  onValueChanged(data?:any) {
+  onValueChanged() {
     if (!this.QuestionForm) {return ;}
 
     const form = this.QuestionForm
@@ -131,10 +135,19 @@ export class QuestionsInterfaceComponent implements OnInit {
 
   onSubmit() {
     this.question = this.QuestionForm.value
-    console.log(this.question)
-    console.log(this.message)
-
+    this.questions.push(this.question)
+    console.log(this.questions)
+    
     this.reset()
+
+  }
+  onSubmitExam() {
+    console.log("clicked")
+    this.question = this.QuestionForm.value
+    this.questions.push(this.question)
+    
+    console.log(this.questions)
+    this.router.navigateByUrl('/finished')
 
   }
 

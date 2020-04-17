@@ -1,19 +1,26 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-
+import { EventEmitter } from 'protractor';
+import { Subject, Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataShareService {
+  private subject = new Subject<any>()
 
-  private messageSource = new BehaviorSubject('default message');
-  currentMessage = this.messageSource.asObservable()
-
-  constructor() { }
-
-  changeMessage(message: string) {
-    this.messageSource.next(message)
+  sendData(data:string) {
+    this.subject.next({
+      text:data
+    })
   }
+
+  getData() : Observable<any> {
+    return this.subject.asObservable()
+  }
+
+
+
+ 
+
 }

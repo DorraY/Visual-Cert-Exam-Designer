@@ -23,7 +23,7 @@
               <p>
                 <td>
                   <mat-form-field class="form-group">
-                    <mat-select required placeholder="Thème" formControlName="theme" style="margin-right: 100px;">
+                    <mat-select  #existantThème required placeholder="Thème" formControlName="theme" style="margin-right: 100px;">
                       <mat-option *ngFor="let theme of themes" [value]="theme">
                         {{ theme }}
                       </mat-option>
@@ -39,11 +39,18 @@
 
               <!-- <p>
                 <mat-form-field class="form-group">
-                <input newThemeValidator required matInput formControlName="newTheme" 
+                <input newThemeValidator  matInput [disabled]=true readonly=true
+                formControlName="newTheme" #nouveauThème
                 placeholder="Nouveau thème" type="text">
                 <mat-error *ngIf="formErrors.newTheme" >Thème existe déjà</mat-error>
               </mat-form-field>
-              </p> -->
+              </p>
+
+              <button type="button" mat-button class="btn btn-sm btn-block btn-secondary " 
+              (click)="toggle()" > {{toggleButton}}
+              </button> -->
+
+
               
               <p>
                 <td >

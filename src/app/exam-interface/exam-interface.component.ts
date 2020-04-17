@@ -6,6 +6,7 @@ import {Themes,Exam} from '../shared/exam'
 import {Question} from '../shared/question'
 
 import {DataShareService} from '../services/data-share.service'
+import { formGroupNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   selector: 'app-exam-interface',
@@ -16,13 +17,14 @@ import {DataShareService} from '../services/data-share.service'
 export class ExamInterfaceComponent implements OnInit {
 
 
-  message: string
+  toggleButton= "Nouveau thème"
 
   @ViewChild('eform') examFormDirective
-  @ViewChild('nouveauTheme') nouveauTheme: ElementRef
+  @ViewChild('nouveauThème') nouveauTheme: ElementRef
   ExamenForm: FormGroup
   exam: Exam
   themes=Themes
+  
 
   formErrors = {
     'newTheme': '',
@@ -56,18 +58,28 @@ export class ExamInterfaceComponent implements OnInit {
     }
   }
 
-  constructor(private data: DataShareService,private renderer: Renderer2, private router: Router,private fb: FormBuilder) { 
-    
+  toggle() {
+    if (this.toggleButton=="Nouveau thème") {
+      this.toggleButton = "Thème existant"
+      this.nouveauTheme.nativeElement.disabled=false
+    } else {
+      this.toggleButton = "Nouveau thème"
+    }
+  }
+
+  constructor(private dataService: DataShareService, 
+      private router: Router,private fb: FormBuilder) {  
+  }
+
+  sendData(): void {
+    this.dataService.sendData('message from exam to questions')
   }
 
   ngOnInit() {
     this.createForm()
-    this.data.currentMessage.subscribe(message => this.message = message)
   }
 
-  newMessage() {
-    this.data.changeMessage("hello from exam")
-  }
+
 
 
 
@@ -81,7 +93,7 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
 
   createForm() {
     this.ExamenForm = this.fb.group({
-      newTheme: new FormControl('', [this.newThemeValidator]),
+      newTheme: new FormControl('',this.newThemeValidator),
       theme: ['', Validators.required ],
       nom: ['',Validators.required],
       score: [null,Validators.required],
@@ -93,6 +105,8 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
     this.onValueChanged()
 
   }
+
+
 
   onValueChanged(data?:any) {
     if (!this.ExamenForm) {return ;}
@@ -138,7 +152,6 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
       Themes.push(this.exam[Object.keys(this.exam)[0]])
     }
     console.log(this.exam)
-    this.newMessage()
     this.router.navigateByUrl('/questions-interface')
     this.reset()
 
