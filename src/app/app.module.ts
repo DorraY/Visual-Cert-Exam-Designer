@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import {HomeComponent} from './home/home.component'
@@ -21,7 +20,7 @@ import { HeaderComponent } from './header/header.component'
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatInputModule} from '@angular/material';
+import {MatInputModule, MatAutocompleteModule} from '@angular/material';
 import { MatDialogModule,MatDialogRef } from '@angular/material/dialog';
 
 import {MatButtonModule} from '@angular/material/button';
@@ -54,6 +53,7 @@ import { FinishedComponent } from './finished/finished.component';
     MatInputModule,
     MatDialogModule,
     FlexLayoutModule,
+    MatAutocompleteModule
     
 
 

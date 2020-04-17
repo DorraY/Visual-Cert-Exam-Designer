@@ -17,17 +17,14 @@ import { formGroupNameProvider } from '@angular/forms/src/directives/reactive_di
 export class ExamInterfaceComponent implements OnInit {
 
 
-  toggleButton= "Nouveau thème"
 
   @ViewChild('eform') examFormDirective
-  @ViewChild('nouveauThème') nouveauTheme: ElementRef
   ExamenForm: FormGroup
   exam: Exam
   themes=Themes
   
 
   formErrors = {
-    'newTheme': '',
     'theme': '',
     'nom': '',
     'temps': '',
@@ -36,10 +33,6 @@ export class ExamInterfaceComponent implements OnInit {
   }
 
   validationMessages = {
-    'newTheme': {
-      'newThemeValidator' : ''
-    } , 
-
     'theme': {
       'required': 'Le thème est obligatoire'
     },
@@ -58,14 +51,7 @@ export class ExamInterfaceComponent implements OnInit {
     }
   }
 
-  toggle() {
-    if (this.toggleButton=="Nouveau thème") {
-      this.toggleButton = "Thème existant"
-      this.nouveauTheme.nativeElement.disabled=false
-    } else {
-      this.toggleButton = "Nouveau thème"
-    }
-  }
+
 
   constructor(private dataService: DataShareService, 
       private router: Router,private fb: FormBuilder) {  
@@ -93,7 +79,6 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
 
   createForm() {
     this.ExamenForm = this.fb.group({
-      newTheme: new FormControl('',this.newThemeValidator),
       theme: ['', Validators.required ],
       nom: ['',Validators.required],
       score: [null,Validators.required],
@@ -148,7 +133,7 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
   onSubmit() {
     this.exam = this.ExamenForm.value
     
-    if (!this.themes.includes(this.exam[Object.keys(this.exam)[0]])) {
+    if (!this.themes.includes(this.exam[Object.keys(this.exam)[0]].trim())) {
       Themes.push(this.exam[Object.keys(this.exam)[0]])
     }
     console.log(this.exam)
