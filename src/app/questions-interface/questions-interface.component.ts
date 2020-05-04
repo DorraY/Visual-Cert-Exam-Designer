@@ -20,6 +20,7 @@ export class QuestionsInterfaceComponent implements OnInit {
   question: Question
   questions: Question[]= []
   DataShare: DataShareService
+  questionId = 0
   
   message: string
 
