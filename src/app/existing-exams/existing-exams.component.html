@@ -1,3 +1,33 @@
-<p>
-  existing-exams works!
-</p>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Durée</th>
+      <th scope="col">Score</th>
+      <th scope="col">Thème</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let exam of examsArray">
+      <th scope="row"> {{exam.exId}}  </th>
+      <td> {{exam.exNom}} </td>
+      <td>  {{exam.exTime}}  </td>
+      <td> {{exam.exScore}} </td>
+      <td> {{exam.exThCode.thNom}} </td>
+      <td> 
+        <button type="button" mat-button  (click)="deleteExam(exam.exId)"
+        class="btn btn-sm btn-block btn-danger " >Supprimer
+        </button>   
+      </td>
+      <td>
+        <button  type="button" mat-button class="btn btn-sm btn-block btn-success ">
+          Modifer
+        </button>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+

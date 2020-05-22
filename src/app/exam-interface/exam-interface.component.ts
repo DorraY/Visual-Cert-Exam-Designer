@@ -3,10 +3,7 @@ import {Router} from '@angular/router'
 
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import {Themes,Exam} from '../shared/exam'
-import {Question} from '../shared/question'
 
-import {DataShareService} from '../services/data-share.service'
-import { formGroupNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   selector: 'app-exam-interface',
@@ -53,21 +50,13 @@ export class ExamInterfaceComponent implements OnInit {
 
 
 
-  constructor(private dataService: DataShareService, 
-      private router: Router,private fb: FormBuilder) {  
+  constructor(private router: Router,private fb: FormBuilder) {  
   }
 
-  sendData(): void {
-    this.dataService.sendData('message from exam to questions')
-  }
 
   ngOnInit() {
     this.createForm()
   }
-
-
-
-
 
 newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
   console.log(control.value!==undefined)

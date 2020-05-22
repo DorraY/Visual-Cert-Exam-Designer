@@ -5,8 +5,6 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import {Themes,Exam} from '../shared/exam'
 import {Question} from '../shared/question'
 
-import {DataShareService} from '../services/data-share.service'
-
 @Component({
   selector: 'app-questions-interface',
   templateUrl: './questions-interface.component.html',
@@ -19,7 +17,6 @@ export class QuestionsInterfaceComponent implements OnInit {
   themes=Themes
   question: Question
   questions: Question[]= []
-  DataShare: DataShareService
   questionId = 0
   
   message: string
@@ -49,11 +46,8 @@ export class QuestionsInterfaceComponent implements OnInit {
   }
   message$: any;
 
-  constructor(private router: Router,private dataShare: DataShareService, private fb: FormBuilder) { 
-    this.message$ = this.dataShare.getData()
-    console.log(this.message$)
-    
-
+  constructor(private router: Router, private fb: FormBuilder) { 
+  
     
   }
 

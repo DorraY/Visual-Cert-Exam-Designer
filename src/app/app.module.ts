@@ -27,6 +27,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { AideComponent } from './aide/aide.component';
 import { FinishedComponent } from './finished/finished.component';
 import { ExistingExamsComponent } from './existing-exams/existing-exams.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { ExistingExamsComponent } from './existing-exams/existing-exams.componen
     MatInputModule,
     MatDialogModule,
     FlexLayoutModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    HttpClientModule
     
 
 

@@ -29,7 +29,10 @@ export class AideComponent implements OnInit {
       case "/questions-interface":
         this.paragraphe1 = "Tous les champs sont obligatoire. Pour indiquer qu'une réponse est correcte, veuillez cocher sa case."
         this.paragraphe2 = "Pour valider votre question actuelle et ajouter une autre question, cliquez sur ajout question. Si vous voulez terminer l'examen, cliquer sur valider examen."
-        
+
+      case "/existing-exams"  :
+        this.paragraphe1 = "Vous trouvez ici tous les examens enregistrés."
+        this.paragraphe2 = "Vous pouvez ensuite supprimer un certain examen, ou bien le modifier/consulter en détails."
 
         break
       case "/exam-interface":

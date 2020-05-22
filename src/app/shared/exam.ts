@@ -1,6 +1,7 @@
 import  {Question} from './question'
 
 export class Exam {
+    id: number
     theme: string
     nom: string
     score: number
