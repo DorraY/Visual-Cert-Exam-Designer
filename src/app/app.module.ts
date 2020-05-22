@@ -26,6 +26,7 @@ import { MatDialogModule,MatDialogRef } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { AideComponent } from './aide/aide.component';
 import { FinishedComponent } from './finished/finished.component';
+import { ExistingExamsComponent } from './existing-exams/existing-exams.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { FinishedComponent } from './finished/finished.component';
     QuestionsInterfaceComponent,
     AboutComponent,
     AideComponent,
-    FinishedComponent
+    FinishedComponent,
+    ExistingExamsComponent
   ],
   imports: [
     BrowserModule,
