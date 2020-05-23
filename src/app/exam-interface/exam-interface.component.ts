@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, Input, Directive, ElementRef, Renderer2 } from '@angular/core';
-import {Router} from '@angular/router'
-
+import {Router, ActivatedRoute} from '@angular/router'
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import {Themes,Exam} from '../shared/exam'
-
+import { ExamService } from '../services/exam-service';
 
 @Component({
   selector: 'app-exam-interface',
@@ -13,14 +12,13 @@ import {Themes,Exam} from '../shared/exam'
 
 export class ExamInterfaceComponent implements OnInit {
 
-
-
+  id:number
+  
   @ViewChild('eform') examFormDirective
   ExamenForm: FormGroup
   exam: Exam
   themes=Themes
   
-
   formErrors = {
     'theme': '',
     'nom': '',
@@ -48,14 +46,30 @@ export class ExamInterfaceComponent implements OnInit {
     }
   }
 
-
-
-  constructor(private router: Router,private fb: FormBuilder) {  
+  constructor(private route: ActivatedRoute,private router: Router,private fb: FormBuilder, 
+    private examService: ExamService
+    ) {  
   }
 
 
   ngOnInit() {
     this.createForm()
+    this.id = this.route.snapshot.params['id']
+    console.log(this.id)
+    this.examService.getExam(this.id).subscribe(
+      data => {
+        console.log(data)
+        this.exam = data
+      } , error => console.log(error)
+    )
+  }
+
+  updateExam() {
+    this.examService.updateExam(this.id,this.exam).subscribe(
+      data => console.log(data) , error => console.log(error)
+    ) 
+    this.exam = new Exam()
+  
   }
 
 newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {

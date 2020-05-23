@@ -37,7 +37,7 @@ export class ExistingExamsComponent implements OnInit {
        }
      })
   }
-  
+
   deleteExam(id: number) {
     this.examService.deleteExam(id).subscribe(
       data =>
@@ -46,6 +46,10 @@ export class ExistingExamsComponent implements OnInit {
         location.reload()
       }, error => console.log(error)
     )
+  }
+
+  updateExam(id:number) {
+    this.router.navigate(['exam-interface',id])
   }
 
 }

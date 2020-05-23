@@ -23,4 +23,7 @@ export class ExamService {
     {responseType: 'text'}
     )
   }
+  updateExam(id:number, value:any) : Observable<Object> {
+    return this.http.put(`${this.baseUrl}/${id}`,value)
+  }
 }
