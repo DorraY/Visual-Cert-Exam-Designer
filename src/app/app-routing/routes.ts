@@ -7,6 +7,7 @@ import { AboutComponent } from '../about/about.component'
 import { FinishedComponent } from '../finished/finished.component'
 import { ExistingExamsComponent } from '../existing-exams/existing-exams.component'
 import { ExamDetailsComponent } from '../exam-details/exam-details.component'
+import { QuestionDetailsComponent } from '../question-details/question-details.component'
 
 export const routes:Routes = [
     {path:'home', component: HomeComponent},
@@ -17,5 +18,6 @@ export const routes:Routes = [
     {path: 'finished', component:FinishedComponent},
     {path: 'existing-exams', component: ExistingExamsComponent},
     {path: 'exam-details/:id', component: ExamDetailsComponent},
+    {path: 'question-details' , component: QuestionDetailsComponent},
     {path: '**',redirectTo: '/home'}
 ]

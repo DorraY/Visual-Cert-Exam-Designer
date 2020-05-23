@@ -125,7 +125,6 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
     if (!this.themes.includes(this.exam[Object.keys(this.exam)[0]].trim())) {
       Themes.push(this.exam[Object.keys(this.exam)[0]])
     }
-    console.log(this.exam.theme)
     this.router.navigateByUrl('/questions-interface')
     this.reset()
 

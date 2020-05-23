@@ -71,8 +71,11 @@
               class="btn btn-lg btn-block btn-success " 
               [disabled]="ExamenForm.invalid">Valider
             </button>
-            <button type="button" mat-button class="btn btn-lg btn-block btn-danger " 
-            (click)="reset()" >Reset
+            <button type="button" mat-button class="btn btn-lg btn-block btn-primary " >
+              <a routerLink="/question-details" 
+              routerLinkActive="active">
+              Questions
+              </a>
             </button>
             </table>
             
