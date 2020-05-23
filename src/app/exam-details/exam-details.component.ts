@@ -1,30 +1,28 @@
-import { Component, OnInit, ViewChild, Input, Directive, ElementRef, Renderer2 } from '@angular/core';
-import {Router, ActivatedRoute, NavigationEnd} from '@angular/router'
-import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
-import {Themes,Exam} from '../shared/exam'
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Exam, Themes } from '../shared/exam';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ExamService } from '../services/exam-service';
 import { DataTransferService } from '../services/data-transfer.service';
 
 @Component({
-  selector: 'app-exam-interface',
-  templateUrl: './exam-interface.component.html',
-  styleUrls: ['./exam-interface.component.css']
+  selector: 'app-exam-details',
+  templateUrl: './exam-details.component.html',
+  styleUrls: ['./exam-details.component.css']
 })
-
-export class ExamInterfaceComponent implements OnInit {
+export class ExamDetailsComponent implements OnInit {
   
   @ViewChild('eform') examFormDirective
   ExamenForm: FormGroup
   exam: Exam
   themes=Themes
-  updateRequest=false
+  examId: number
   
   formErrors = {
     'theme': '',
     'nom': '',
     'temps': '',
     'score': ''
-
   }
 
   validationMessages = {
@@ -47,17 +45,40 @@ export class ExamInterfaceComponent implements OnInit {
   }
 
   constructor(private router: Router,private fb: FormBuilder, 
-    private examService: ExamService, private dataTransferService: DataTransferService
+    private examService: ExamService,
+    private route: ActivatedRoute,
+    private dataTransferService: DataTransferService
     ) {  
 
   }
 
 
   ngOnInit() {
+    this.examId = this.route.snapshot.params['id'];
+
+    this.dataTransferService.getpreviewMessage().subscribe(examen =>    
+    {
+        this.exam = examen
+    })
     this.createForm()
 
-  }
+    this.examService.getExam(this.examId).subscribe(
+      data => {
+        console.log(data)
+        this.exam = data
+      } , error => console.log(error)
+    )
+    console.log(this.exam)
+    }
 
+  updateExam() {
+    this.examService.updateExam(this.examId, this.exam).subscribe(
+      data => console.log(data), error => console.log(error)
+    )
+    this.exam = new Exam()
+
+  
+  }
 
 newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
   console.log(control.value!==undefined)
@@ -69,10 +90,11 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
 
   createForm() {
     this.ExamenForm = this.fb.group({
-      theme: ['', Validators.required ],
-      nom: ['',Validators.required],
-      score: [null,Validators.required],
-      temps: [null,[Validators.required, Validators.max(360)]],
+      theme: [this.exam.exThCode.thNom, Validators.required ],
+      
+      nom: [this.exam.exNom,Validators.required],
+      score: [this.exam.exScore,Validators.required],
+      temps: [this.exam.exTime,[Validators.required, Validators.max(360)]],
     })
 
     this.ExamenForm.valueChanges.subscribe( data => 
@@ -109,27 +131,26 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
   }
 
   reset() {
+    console.log(this.exam.exNom)
+    console.log("clicked")
     this.ExamenForm.reset({
-      theme: '',
-      nom: '',
-      score: 0,
-      temps: 0,
+      theme: this.exam.exThCode,
+      nom: this.exam.exNom,
+      score: this.exam.exScore,
+      temps: this.exam.exTime,
     })
     this.examFormDirective.resetForm()
 
   }
 
   onSubmit() {
-    this.exam = this.ExamenForm.value
-    
+    this.updateExam()
     if (!this.themes.includes(this.exam[Object.keys(this.exam)[0]].trim())) {
       Themes.push(this.exam[Object.keys(this.exam)[0]])
     }
-    console.log(this.exam.theme)
-    this.router.navigateByUrl('/questions-interface')
-    this.reset()
+    
+    
 
   }
   
-
 }

@@ -1,11 +1,12 @@
 import  {Question} from './question'
+import { Theme } from './theme'
 
 export class Exam {
-    id: number
-    theme: string
-    nom: string
-    score: number
-    temps: number
+    exId: number
+    exThCode: Theme
+    exNom: string
+    exScore: number
+    exTime: number
     questions: Question[]
 }
 

@@ -4,6 +4,7 @@ import { Exam } from '../shared/exam';
 import { ExamService } from '../services/exam-service';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
+import { DataTransferService } from '../services/data-transfer.service';
 
 @Component({
   selector: 'app-existing-exams',
@@ -16,7 +17,9 @@ export class ExistingExamsComponent implements OnInit {
   
 
 
-  constructor(private examService: ExamService, private router: Router) 
+  constructor(
+    private dataTransferService: DataTransferService , 
+    private examService: ExamService, private router: Router) 
   { }
 
   async ngOnInit() {
@@ -49,7 +52,9 @@ export class ExistingExamsComponent implements OnInit {
   }
 
   updateExam(id:number) {
-    this.router.navigate(['exam-interface',id])
+    this.dataTransferService.setpreviewdata(this.examsArray[id-1])
+
+    this.router.navigate(['exam-details', id] )
   }
 
 }

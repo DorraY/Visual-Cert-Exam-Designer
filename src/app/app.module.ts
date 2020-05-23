@@ -28,6 +28,8 @@ import { AideComponent } from './aide/aide.component';
 import { FinishedComponent } from './finished/finished.component';
 import { ExistingExamsComponent } from './existing-exams/existing-exams.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ExamDetailsComponent } from './exam-details/exam-details.component';
+import { QuestionDetailsComponent } from './question-details/question-details.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { HttpClientModule } from '@angular/common/http';
     AboutComponent,
     AideComponent,
     FinishedComponent,
-    ExistingExamsComponent
+    ExistingExamsComponent,
+    ExamDetailsComponent,
+    QuestionDetailsComponent
   ],
   imports: [
     BrowserModule,
