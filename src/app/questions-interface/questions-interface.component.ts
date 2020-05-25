@@ -142,12 +142,12 @@ export class QuestionsInterfaceComponent implements OnInit {
     this.question = this.QuestionForm.value
     this.questions.push(this.question)
     
-    for (let i=0;i<this.questions.length;i++) {
-      this.questions[i].questionId=i+1
-      for (let j=0;j<this.questions[i].reponses.length;j++) {
-        this.questions[i].reponses[j].reponseId=j+1
-      }
-    }
+    // for (let i=0;i<this.questions.length;i++) {
+    //   this.questions[i].questionId=i+1
+    //   for (let j=0;j<this.questions[i].reponses.length;j++) {
+    //     this.questions[i].reponses[j].reponseId=j+1
+    //   }
+    // }
 
     console.log(this.questions)
     this.router.navigateByUrl('/finished')

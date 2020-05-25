@@ -4,6 +4,8 @@ import { Exam, Themes } from '../shared/exam';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ExamService } from '../services/exam-service';
 import { DataTransferService } from '../services/data-transfer.service';
+import { QuestionService } from '../services/question-service';
+import { Question } from '../shared/question';
 
 @Component({
   selector: 'app-exam-details',
@@ -17,6 +19,7 @@ export class ExamDetailsComponent implements OnInit {
   exam: Exam
   themes=Themes
   examId: number
+  examQuestions: Question[]
   
   formErrors = {
     'theme': '',
@@ -44,31 +47,46 @@ export class ExamDetailsComponent implements OnInit {
     }
   }
 
-  constructor(private router: Router,private fb: FormBuilder, 
+  constructor(private router: Router,
+    private fb: FormBuilder, 
     private examService: ExamService,
     private route: ActivatedRoute,
-    private dataTransferService: DataTransferService
+    private dataTransferService: DataTransferService,
+    private questionService: QuestionService
     ) {  
 
   }
 
 
   ngOnInit() {
-    this.examId = this.route.snapshot.params['id'];
+    this.examId = this.route.snapshot.params['id']
+    this.examQuestions= []
 
     this.dataTransferService.getpreviewMessage().subscribe(examen =>    
     {
         this.exam = examen
     })
     this.createForm()
-
     this.examService.getExam(this.examId).subscribe(
       data => {
-        console.log(data)
         this.exam = data
       } , error => console.log(error)
     )
-    console.log(this.exam)
+
+    this.questionService.getQuestionList().subscribe(question => 
+      {
+        let i=0
+        while (i!=question.length) {
+
+          if (question[i].exCode.exId==this.examId) {
+            this.examQuestions.push(question[i])
+          }
+          i++
+        }
+      }, error => console.log(error))
+
+
+
     }
 
   updateExam() {
@@ -91,7 +109,6 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
   createForm() {
     this.ExamenForm = this.fb.group({
       theme: [this.exam.exThCode.thNom, Validators.required ],
-      
       nom: [this.exam.exNom,Validators.required],
       score: [this.exam.exScore,Validators.required],
       temps: [this.exam.exTime,[Validators.required, Validators.max(360)]],
@@ -148,8 +165,10 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
     if (!this.themes.includes(this.exam[Object.keys(this.exam)[0]].trim())) {
       Themes.push(this.exam[Object.keys(this.exam)[0]])
     }
-    
-    
+  }
+  goToQuestions() {
+
+    this.router.navigate(['existing-questions', this.examId] )
 
   }
   

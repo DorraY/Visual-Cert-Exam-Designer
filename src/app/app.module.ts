@@ -30,6 +30,7 @@ import { ExistingExamsComponent } from './existing-exams/existing-exams.componen
 import { HttpClientModule } from '@angular/common/http';
 import { ExamDetailsComponent } from './exam-details/exam-details.component';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
+import { ExistingQuestionsComponent } from './existing-questions/existing-questions.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { QuestionDetailsComponent } from './question-details/question-details.co
     FinishedComponent,
     ExistingExamsComponent,
     ExamDetailsComponent,
-    QuestionDetailsComponent
+    QuestionDetailsComponent,
+    ExistingQuestionsComponent
   ],
   imports: [
     BrowserModule,

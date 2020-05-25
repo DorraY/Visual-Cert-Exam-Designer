@@ -2,7 +2,7 @@ import  {Question} from './question'
 
 export class Explication {
     exCode: number
-    exQuCode: Question
+    exQucode: Question
     exTextExplication: string
 
 }

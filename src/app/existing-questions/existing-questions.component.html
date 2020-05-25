@@ -1,0 +1,38 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Ordre</th>
+      <th scope="col">Enoncé</th>
+      <th scope="col">Chapitre</th>
+      <th scope="col">Explication</th>
+      
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let question of questionsArray" > 
+      <!-- ; let explication of explicationsArray -->
+      <th scope="row"> {{question.quCode}}  </th>
+      <td> {{question.ordre}} </td>
+      <td>  {{question.quText}}  </td>
+      <td> {{question.chCode.chNom}} </td>  
+      <td> explication</td>
+      <td> 
+        <button type="button" mat-button  
+        (click)="deleteQuestion(question.quCode)"
+        class="btn btn-sm btn-block btn-danger " >Supprimer
+        </button>   
+      </td>
+      <td>
+        <button (click)="updateQuestion(question.quCode)" 
+        type="button" mat-button class="btn btn-sm btn-block
+         btn-success ">
+          Modifier
+        </button>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
