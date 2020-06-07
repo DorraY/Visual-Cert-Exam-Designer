@@ -23,15 +23,16 @@
               <p>
                 <td>
                   <mat-form-field>
-                    <input matinput 
-                    [(ngModel)]="exam.exThCode.thNom"
-                    type="text" placeholder="Thème" matInput formControlName="theme" style="margin-right: 100px;"
+                    <input matinput type="text" placeholder="Thème" id="exThCode" 
+                    [(ngModel)]="exam.exThCode" matInput formControlName="theme" 
+                    style="margin-right: 100px;"
                          [matAutocomplete]="auto">
                          <mat-error *ngIf="formErrors.theme" > {{formErrors.theme}}</mat-error>     
-                         <mat-error *ngIf="ExamenForm.get('theme').touched &&!formErrors.theme" >Le thème est obligatoire  </mat-error>
+                         <mat-error *ngIf="ExamenForm.get('theme').touched &&!formErrors.theme" >Le thème est obligatoire 
+                            </mat-error>
                        <mat-autocomplete #auto="matAutocomplete">
                          <mat-option *ngFor="let theme of themes" [value]="theme">
-                           {{theme}}
+                           {{theme.thNom}}
                         </mat-option>
 
                     </mat-autocomplete>

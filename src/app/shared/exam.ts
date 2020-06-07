@@ -7,7 +7,6 @@ export class Exam {
     exNom: string
     exScore: number
     exTime: number
-    questions: Question[]
 }
 
 export const Themes = ['Base des données','Algorithmique','Programmation']

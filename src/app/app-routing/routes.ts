@@ -14,7 +14,8 @@ export const routes:Routes = [
     {path:'home', component: HomeComponent},
     {path: 'exam-interface', component: ExamInterfaceComponent},
     {path: '' , redirectTo: '/home', pathMatch: 'full'},
-    {path: 'questions-interface',component: QuestionsInterfaceComponent},
+    {path: 'questions-interface/:id',component: QuestionsInterfaceComponent},
+
     {path: 'about', component: AboutComponent},
     {path: 'finished', component:FinishedComponent},
     {path: 'existing-exams', component: ExistingExamsComponent},

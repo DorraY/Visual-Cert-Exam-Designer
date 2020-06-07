@@ -5,30 +5,33 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ExamService {
+export class ThemeService {
 
-  private baseUrl = "http://localhost:9090/springboot-crud-rest/api/v1/exams/"
+  private baseUrl = "http://localhost:9090/springboot-crud-rest/api/v1/themes/"
+
 
   constructor(private http: HttpClient) { }
 
-  getExam(id:number): Observable<any> {
+  getTheme(id:number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`)
   }
 
-  createExam(exam : Object): Observable<Object> {
-    return this.http.post(`${this.baseUrl}`, exam)
-  }
-
-  getExamList() : Observable<any> {
+  getThemeList(): Observable<any> {
     return this.http.get(`${this.baseUrl}`)
   }
 
-  deleteExam(id: number) : Observable<any> {
+  deleteTheme(id:number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`,
     {responseType: 'text'}
     )
   }
-  updateExam(id:number, value:any) : Observable<Object> {
+
+  updateTheme(id :number, value: any) : Observable<Object> {
     return this.http.put(`${this.baseUrl}/${id}`,value)
   }
+
+  createTheme(theme : Object): Observable<Object> {
+    return this.http.post(`${this.baseUrl}`, theme)
+  }
+  
 }

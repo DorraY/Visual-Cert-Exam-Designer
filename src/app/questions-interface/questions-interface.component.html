@@ -15,7 +15,7 @@
                       <td >
                         <mat-form-field class="form-group">
                           <textarea matInput formControlName="question" 
-                          placeholder="Question"  rows="10">  
+                          placeholder="Question" [(ngModel)]="question.quText"  rows="10">  
                           </textarea>
                           <mat-error *ngIf="formErrors.question" > {{formErrors.question}} </mat-error>
                           <mat-error *ngIf="QuestionForm.get('question').touched &&!formErrors.question" >Une question est obligatoire</mat-error>
@@ -29,9 +29,17 @@
                       <td >
                         <mat-form-field class="form-group">
                           <input  required matInput formControlName="chapitre" 
+                          [matAutocomplete]="auto" [(ngModel)]="question.quChCode"
                           placeholder="Chapitre" type="text">
                           <mat-error *ngIf="formErrors.chapitre" > {{formErrors.chapitre}} </mat-error>
                           <mat-error *ngIf="QuestionForm.get('chapitre').touched &&!formErrors.chapitre" >Un chapitre est obligatoire</mat-error>
+                          <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let chapter of chapters"
+                             [value]="chapter">
+                              {{chapter.chNom}}
+                           </mat-option>
+   
+                       </mat-autocomplete>
                         </mat-form-field>
                       </td>
                     </p>
@@ -44,7 +52,6 @@
                           <textarea matInput formControlName="explication" 
                           placeholder="Explication"  rows="10">  
                           </textarea>
-
                           <mat-error *ngIf="formErrors.explication" > {{formErrors.explication}} </mat-error>
                           <mat-error *ngIf="QuestionForm.get('explication').touched &&!formErrors.explication" >Une explication est obligatoire</mat-error>
                         </mat-form-field>
@@ -54,11 +61,6 @@
             
                 </div>
               </div>
-
-
-
-
-
               
               <div class="container" >
                 <div class="row text-center d-flex justify-content-between pt-5 mb-3">
@@ -69,8 +71,10 @@
                     <h6 class="row font-weight-bold">
                       <label for="">Réponse {{ReponseIndex +1 }} </label>
                       <mat-form-field class="form-group">
-                        <input  formControlName="reponseCorrecte" type="checkbox" name="Rep1"  > 
-                        <textarea required matInput formControlName="enonce" 
+                        <input [(ngModel)]="choix.chCorrect" formControlName="reponseCorrecte" type="checkbox" name="Rep1"  > 
+                        <textarea required matInput 
+                        [(ngModel)]="choix.chText" 
+                        formControlName="enonce" 
                          rows="5">  
                         </textarea>   
                       </mat-form-field>

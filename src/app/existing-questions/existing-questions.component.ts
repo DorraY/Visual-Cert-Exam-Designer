@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ExamService } from '../services/exam-service';
 import { Observable } from 'rxjs';
-import { Exam } from '../shared/exam';
 import { DataTransferService } from '../services/data-transfer.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { QuestionService } from '../services/question-service';
 import { Question } from '../shared/question';
 import { Explication } from '../shared/explication';
 import { ExplicationService } from '../services/explication.service';
+import { Choix } from '../shared/choice';
+import { ChoixService } from '../services/choix.service';
 
 @Component({
   selector: 'app-existing-questions',
@@ -21,57 +22,96 @@ export class ExistingQuestionsComponent implements OnInit {
   examId: number
   explications: Observable<Explication[]>
   explicationsArray: Explication[]
-
-  
-
+  choixArray: Choix[]
+  choix: Observable<Choix[]>
+  questionExplicationCorrespondance
 
   constructor(
-    private dataTransferService: DataTransferService , 
     private examService: ExamService, 
     private router: Router,
+    private dataTransferService: DataTransferService,
     private questionsService: QuestionService,
     private route: ActivatedRoute,
-    private explicationService: ExplicationService
+    private explicationService: ExplicationService,
+    private choixService: ChoixService
 
     ) 
   { }
 
   async ngOnInit() {
     this.examId = this.route.snapshot.params['id']
-
+    this.questionExplicationCorrespondance=[]
     this.questionsArray=[]
     this.explicationsArray=[]
     this.reloadData()
-    console.log(this.questionsArray)
+    //console.log(this.questionsArray)
 
   }
 
   reloadData() {
+    this.explications = this.explicationService.getExplicationList()
+    this.explications.subscribe((explication) => {
+      let i=0
+      while(i!==explication.length) {
+        this.explicationsArray.push(explication[i])
+        //console.log(explication[i])
+        i++
+      }
+    }) 
+    //console.log(this.explicationsArray)
+
     this.questions = this.questionsService.getQuestionList()
     this.questions.subscribe((question) =>   
     {
       let i=0
       while (i!==question.length) {
         if (question[i].exCode.exId==this.examId) {
-          this.questionsArray.push(question[i])
+          
+          for (let j=0;j<this.explicationsArray.length;j++) {
+            if (question[i].quCode==this.explicationsArray[j].exQucode.quCode) {
+              question[i].Explication = this.explicationsArray[j]
+              this.questionsArray.push(question[i])
+            }
+          }
         }
         i++
       }
     }  )
+    //console.log(this.questionsArray)
 
-    this.explications = this.explicationService.getExplicationList()
-    this.explications.subscribe((explication) => {
-      let i=0
-      while(i!==explication.length) {
-        this.explicationsArray.push(explication[i])
-        console.log(explication[i])
-        i++
-      }
-    }) 
-    console.log(this.explicationsArray)
+
+
+    
   }
 
   deleteQuestion(id: number) {
+    let associatedExplicationId 
+
+    this.choix = this.choixService.getChoixList()
+
+    this.choix.subscribe((data) => {
+      for (let i=0;i<data.length;i++) {
+        if (data[i].chQuCode.quCode==id) {
+          this.choixService.deleteChoix(data[i].choixCode)
+  
+        }
+      }
+    })
+
+    this.explicationService.getExplicationList().subscribe(
+      (explication) => {
+        for (let i=0;i<explication.length;i++) {
+          if (explication.exQucode.quCode==id) {
+            this.explicationService.deleteExplication(explication.exCode).subscribe(
+              data => {
+                console.log(data)
+              }, error =>console.log(error)
+            )
+          }
+        }
+      }
+    )
+
     this.questionsService.deleteQuestion(id).subscribe(
       data =>
       {
@@ -82,8 +122,11 @@ export class ExistingQuestionsComponent implements OnInit {
   }
 
   updateQuestion(id:number) {
-    //this.dataTransferService.setpreviewdata(this.examsArray[id-1])
     this.router.navigate(['question-details', id] )
+  }
+
+  addNewQuestion() {
+    this.router.navigate(['questions-interface', this.examId] )
   }
 
 }

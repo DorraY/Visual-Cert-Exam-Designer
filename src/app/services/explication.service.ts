@@ -29,6 +29,12 @@ export class ExplicationService {
     return this.http.put(`${this.baseUrl}/${id}`,value)
   }
 
+  createExplication(explication : Object): Observable<Object> {
+    return this.http.post(`${this.baseUrl}`, explication)
+  }
+
+  
+
 
 
 }

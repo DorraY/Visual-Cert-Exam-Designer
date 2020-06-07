@@ -11,8 +11,8 @@ export class QuestionService {
 
   constructor(private http: HttpClient) { }
 
-  getQuestion(id:number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`)
+   getQuestion(id:number){
+    return  this.http.get(`${this.baseUrl}/${id}`).toPromise()
   }
 
   getQuestionList(): Observable<any> {
@@ -27,6 +27,10 @@ export class QuestionService {
 
   updateQuestion(id :number, value: any) : Observable<Object> {
     return this.http.put(`${this.baseUrl}/${id}`,value)
+  }
+
+  createQuestion(question : Object): Observable<Object> {
+    return this.http.post(`${this.baseUrl}`, question)
   }
 
 

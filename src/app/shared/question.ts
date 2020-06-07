@@ -1,5 +1,6 @@
 import { Chapter } from "./chapter"
 import { Exam } from "./exam"
+import { Explication } from "./explication"
 
 export class Question {
     // enonce: string
@@ -16,4 +17,5 @@ export class Question {
     quChCode: Chapter
     exCode: Exam
     quText: string
+    Explication:Explication
 }

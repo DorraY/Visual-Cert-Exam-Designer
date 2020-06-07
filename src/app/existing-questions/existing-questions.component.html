@@ -17,7 +17,7 @@
       <td> {{question.ordre}} </td>
       <td>  {{question.quText}}  </td>
       <td> {{question.chCode.chNom}} </td>  
-      <td> explication</td>
+      <td> {{ question.Explication.exTextExplanation}}  </td>
       <td> 
         <button type="button" mat-button  
         (click)="deleteQuestion(question.quCode)"
@@ -32,7 +32,22 @@
         </button>
       </td>
     </tr>
-
-  </tbody>
+  </tbody>  
 </table>
+
+
+
+
+
+
+<div class="container my-4">
+  <div class="border border-light p-3 mb-4 text-center">
+    
+    <button type="button"  class="btn btn-lg btn-inline btn-primary" (click)="addNewQuestion()" >
+    Nouvelle question  
+    </button>  
+    
+    
+  </div>
+</div>
 

@@ -6,6 +6,8 @@ import { ExamService } from '../services/exam-service';
 import { DataTransferService } from '../services/data-transfer.service';
 import { QuestionService } from '../services/question-service';
 import { Question } from '../shared/question';
+import { ThemeService } from '../services/theme.service';
+import { Theme } from '../shared/theme';
 
 @Component({
   selector: 'app-exam-details',
@@ -17,7 +19,7 @@ export class ExamDetailsComponent implements OnInit {
   @ViewChild('eform') examFormDirective
   ExamenForm: FormGroup
   exam: Exam
-  themes=Themes
+  themes: Theme[]
   examId: number
   examQuestions: Question[]
   
@@ -52,7 +54,8 @@ export class ExamDetailsComponent implements OnInit {
     private examService: ExamService,
     private route: ActivatedRoute,
     private dataTransferService: DataTransferService,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private themeService: ThemeService
     ) {  
 
   }
@@ -61,17 +64,15 @@ export class ExamDetailsComponent implements OnInit {
   ngOnInit() {
     this.examId = this.route.snapshot.params['id']
     this.examQuestions= []
+    this.themes = []
 
     this.dataTransferService.getpreviewMessage().subscribe(examen =>    
     {
         this.exam = examen
     })
+    //console.log(this.exam)
+
     this.createForm()
-    this.examService.getExam(this.examId).subscribe(
-      data => {
-        this.exam = data
-      } , error => console.log(error)
-    )
 
     this.questionService.getQuestionList().subscribe(question => 
       {
@@ -85,15 +86,18 @@ export class ExamDetailsComponent implements OnInit {
         }
       }, error => console.log(error))
 
-
-
+    this.reloadThemes()
+    
     }
 
   updateExam() {
+    
     this.examService.updateExam(this.examId, this.exam).subscribe(
       data => console.log(data), error => console.log(error)
     )
     this.exam = new Exam()
+    this.router.navigate(['existing-exams'])
+
 
   
   }
@@ -117,6 +121,20 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
     this.ExamenForm.valueChanges.subscribe( data => 
         this.onValueChanged(data))
     this.onValueChanged()
+
+  }
+
+  reloadThemes() {
+
+    this.themeService.getThemeList().subscribe(
+      (theme) => {
+        for (let i=0;i<theme.length;i++) {
+          this.themes.push(theme[i].thNom)
+          
+        }
+      }
+    )
+    //console.log(this.themes)
 
   }
 
@@ -162,14 +180,11 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
 
   onSubmit() {
     this.updateExam()
-    if (!this.themes.includes(this.exam[Object.keys(this.exam)[0]].trim())) {
-      Themes.push(this.exam[Object.keys(this.exam)[0]])
-    }
+    
   }
   goToQuestions() {
-
+  
     this.router.navigate(['existing-questions', this.examId] )
-
   }
   
 }

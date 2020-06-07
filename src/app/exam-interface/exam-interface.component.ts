@@ -4,6 +4,10 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
 import {Themes,Exam} from '../shared/exam'
 import { ExamService } from '../services/exam-service';
 import { DataTransferService } from '../services/data-transfer.service';
+import { ThemeService } from '../services/theme.service';
+import { Observable } from 'rxjs';
+import { cp } from '@angular/core/src/render3';
+import { Theme } from '../shared/theme';
 
 @Component({
   selector: 'app-exam-interface',
@@ -15,9 +19,11 @@ export class ExamInterfaceComponent implements OnInit {
   
   @ViewChild('eform') examFormDirective
   ExamenForm: FormGroup
-  exam: Exam
-  themes=Themes
+  exam: Exam= new Exam()
+  theme: Theme= new Theme()
+  themes
   updateRequest=false
+  
   
   formErrors = {
     'theme': '',
@@ -45,24 +51,44 @@ export class ExamInterfaceComponent implements OnInit {
       'min' : 'Le score est une valeur positive'
     }
   }
-
-  constructor(private router: Router,private fb: FormBuilder, 
-    private examService: ExamService, private dataTransferService: DataTransferService
+  constructor(private router: Router,
+    private fb: FormBuilder, 
+    private examService: ExamService,
+    private dataTransferService: DataTransferService,
+    private themeService: ThemeService
     ) {  
-
+  }
+  reloadThemes() {
+    this.themeService.getThemeList().subscribe(
+      (theme) => {
+        for (let i=0;i<theme.length;i++) {
+          this.themes.push(theme[i])
+        }
+      }
+    )
   }
 
+  // save(){
+  //   this.examService.createExam(this.exam).subscribe(
+  //     data =>  {  
+  //       console.log(data)
+  //     }
+  //     , error => console.log(error)
+  //   )
+  //   this.exam = new Exam()    
+
+  // }
 
   ngOnInit() {
+    this.themes = []
     this.createForm()
-
+    this.reloadThemes()
   }
-
 
 newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
   console.log(control.value!==undefined)
   if (Themes.includes(control.value) ) {
-      return { 'newTheme': true };
+    return { 'newTheme': true };
   }
   return null;
 }
@@ -78,19 +104,13 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
     this.ExamenForm.valueChanges.subscribe( data => 
         this.onValueChanged(data))
     this.onValueChanged()
-
   }
-
-
 
   onValueChanged(data?:any) {
     if (!this.ExamenForm) {return ;}
-    const form = this.ExamenForm
-    
+    const form = this.ExamenForm 
     for (const field in this.formErrors) {
-
-      if (this.formErrors.hasOwnProperty(field)) {
-        
+      if (this.formErrors.hasOwnProperty(field)) {   
         this.formErrors[field] = ''
         const control = form.get(field)
         if (control && control.dirty && !control.valid) {
@@ -104,8 +124,6 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
         }
       }
     }
-
-
   }
 
   reset() {
@@ -116,16 +134,25 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
       temps: 0,
     })
     this.examFormDirective.resetForm()
-
   }
 
+  
+
   onSubmit() {
-    this.exam = this.ExamenForm.value
     
-    if (!this.themes.includes(this.exam[Object.keys(this.exam)[0]].trim())) {
-      Themes.push(this.exam[Object.keys(this.exam)[0]])
-    }
-    this.router.navigateByUrl('/questions-interface')
+    this.examService.createExam(this.exam).subscribe(
+      data =>  {  
+        console.log(data)
+        let properiete = (Object.keys(data)[0])
+        
+
+        
+        
+        
+        this.router.navigate(['/questions-interface',data[properiete]])
+      }
+      , error => console.log(error)
+    )
     this.reset()
 
   }

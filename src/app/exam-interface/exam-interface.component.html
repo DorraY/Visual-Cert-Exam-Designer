@@ -9,7 +9,7 @@
               <p>
                 <td >
                   <mat-form-field class="form-group">
-                    <input  required matInput formControlName="nom" 
+                    <input  required matInput formControlName="nom" id="exNom" [(ngModel)]="exam.exNom"
                     placeholder="Titre" type="text">
                     <mat-error *ngIf="formErrors.nom" > {{formErrors.nom}} </mat-error>
                     <mat-error *ngIf="ExamenForm.get('nom').touched &&!formErrors.nom" >Le nom est obligatoire  </mat-error>
@@ -23,13 +23,16 @@
               <p>
                 <td>
                   <mat-form-field>
-                    <input matinput type="text" placeholder="Thème" matInput formControlName="theme" style="margin-right: 100px;"
+                    <input matinput type="text" placeholder="Thème" id="exThCode" 
+                    [(ngModel)]="exam.exThCode" matInput formControlName="theme" 
+                    style="margin-right: 100px;"
                          [matAutocomplete]="auto">
                          <mat-error *ngIf="formErrors.theme" > {{formErrors.theme}}</mat-error>     
-                         <mat-error *ngIf="ExamenForm.get('theme').touched &&!formErrors.theme" >Le thème est obligatoire  </mat-error>
+                         <mat-error *ngIf="ExamenForm.get('theme').touched &&!formErrors.theme" >Le thème est obligatoire 
+                            </mat-error>
                        <mat-autocomplete #auto="matAutocomplete">
                          <mat-option *ngFor="let theme of themes" [value]="theme">
-                           {{theme}}
+                           {{theme.thNom}}
                         </mat-option>
 
                     </mat-autocomplete>
@@ -42,7 +45,7 @@
               <p>
                 <td >
                   <mat-form-field class="form-group">
-                    <input pattern="[0-9]*"  required matInput formControlName="temps" 
+                    <input pattern="[0-9]*" id="exTime" [(ngModel)]="exam.exTime" required matInput formControlName="temps" 
                     placeholder="Durée en minutes" type="number">
                     <mat-error *ngIf="formErrors.temps" >  {{formErrors.temps}}  </mat-error>
                     <mat-error *ngIf="ExamenForm.get('temps').touched &&!formErrors.temps" >La durée est obligatoire  </mat-error>
@@ -54,13 +57,16 @@
               <p>
                 <td >
                   <mat-form-field class="form-group">
-                    <input pattern="[0-9]*"   required matInput formControlName="score" 
+                    <input pattern="[0-9]*" id="exScore" [(ngModel)]="exam.exScore"  required matInput formControlName="score" 
                     placeholder="Score" type="number">
                     <mat-error *ngIf="formErrors.score" > {{formErrors.score}}  </mat-error>
                     <mat-error *ngIf="ExamenForm.get('score').touched &&!formErrors.score" >Le score est obligatoire  </mat-error>
                   </mat-form-field>
                 </td>
               </p>
+
+              
+
               <button type="submit"  mat-button 
               class="btn btn-lg btn-block btn-success " 
               [disabled]="ExamenForm.invalid">Valider

@@ -1,9 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Router} from '@angular/router'
+import {Router, ActivatedRoute} from '@angular/router'
 
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import {Themes,Exam} from '../shared/exam'
 import {Question} from '../shared/question'
+import { QuestionService } from '../services/question-service';
+import { ChoixService } from '../services/choix.service';
+import { ChapterService } from '../services/chapter.service';
+import { ExplicationService } from '../services/explication.service';
+import { Choix } from '../shared/choice';
+import { ExamService } from '../services/exam-service';
+import { Chapter } from '../shared/chapter';
 
 @Component({
   selector: 'app-questions-interface',
@@ -13,14 +20,14 @@ import {Question} from '../shared/question'
 export class QuestionsInterfaceComponent implements OnInit {
   @ViewChild('qform') questionFormDirective
   QuestionForm: FormGroup
-  exam: Exam
-  themes=Themes
-  question: Question
-  questions: Question[]= []
-  questionId = 0
   
-  message: string
+  question: Question = new Question()
+  choix: Choix = new Choix()
+  chapters
+  chapitre: Chapter = new Chapter()
 
+  questionOrdre
+  
   formErrors = {
     'question': '',
     'reponses': '',
@@ -44,15 +51,33 @@ export class QuestionsInterfaceComponent implements OnInit {
     },
 
   }
-  message$: any;
 
-  constructor(private router: Router, private fb: FormBuilder) { 
-  
-    
+  constructor(private router: Router, 
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private QuestionService : QuestionService,
+    private ChoixService : ChoixService,
+    private ChapterService: ChapterService,
+    private ExplicationService: ExplicationService,
+    private ExamenService: ExamService) { 
   }
 
   ngOnInit() {
+    this.chapters = []
+    this.questionOrdre =0
     this.createForm()
+    this.reloadChapters()
+  }
+
+  reloadChapters() {
+      this.ChapterService.getChapterList().subscribe(
+        (chapter) => {
+          for (let i=0;i<chapter.length;i++) {
+            this.chapters.push(chapter[i])
+          }
+        }
+      )
+    
   }
 
   createForm() {
@@ -89,13 +114,11 @@ export class QuestionsInterfaceComponent implements OnInit {
     this.reponses.removeAt(index)
   }
 
-  *
 
   onValueChanged() {
     if (!this.QuestionForm) {return ;}
 
     const form = this.QuestionForm
-
     for (const field in this.formErrors) {
       if (this.formErrors.hasOwnProperty(field)) {
         this.formErrors[field] = ''
@@ -128,19 +151,36 @@ export class QuestionsInterfaceComponent implements OnInit {
 
 
   onSubmit() {
-    this.questionId++
-    this.question = this.QuestionForm.value
-    this.questions.push(this.question)
-    console.log(this.questions)
+    this.questionOrdre++
+    console.log(this.chapitre)
+    
+    let questionText = this.question.quText
+    let questionChapter = this.question.quChCode
+    
+
+    this.ExamenService.getExam(this.route.snapshot.params['id']).subscribe(
+      (data) => {
+        console.log(data)
+        this.question.exCode  = data
+        this.question.quText = questionText
+        this.question.quChCode = questionChapter
+        this.question.quOrdre = this.questionOrdre
+        console.log(this.question)
+        this.QuestionService.createQuestion(this.question).subscribe(
+          (data) => {
+            console.log(data)
+          }
+        )
+      }
+    )
     
     this.reset()
 
   }
   onSubmitExam() {
-    this.questionId++
+    this.questionOrdre++
     
     this.question = this.QuestionForm.value
-    this.questions.push(this.question)
     
     // for (let i=0;i<this.questions.length;i++) {
     //   this.questions[i].questionId=i+1
@@ -149,7 +189,7 @@ export class QuestionsInterfaceComponent implements OnInit {
     //   }
     // }
 
-    console.log(this.questions)
+    
     this.router.navigateByUrl('/finished')
 
   }

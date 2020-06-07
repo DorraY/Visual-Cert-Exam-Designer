@@ -2,7 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Exam, Themes } from '../shared/exam';
 import { Question } from '../shared/question';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { QuestionService } from '../services/question-service';
+import { ExplicationService } from '../services/explication.service';
+import { ChoixService } from '../services/choix.service';
+import { DataTransferService } from '../services/data-transfer.service';
 
 @Component({
   selector: 'app-question-details',
@@ -14,9 +18,9 @@ export class QuestionDetailsComponent implements OnInit {
   QuestionForm: FormGroup
   exam: Exam
   themes=Themes
-  question: Question
-  questions: Question[]= []
-  questionId = 0
+  currentQuestion: Question
+  questionId
+
   
   message: string
 
@@ -43,19 +47,34 @@ export class QuestionDetailsComponent implements OnInit {
     },
 
   }
-  message$: any;
 
-  constructor(private router: Router, private fb: FormBuilder) { 
-  
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private questionService: QuestionService,
+    private explicationService: ExplicationService,
+    private choixService: ChoixService,
+    private dataTransferService: DataTransferService,
+    private fb: FormBuilder) { 
+
     
   }
 
   ngOnInit() {
-    this.createForm()
+
+     this.createForm()
+
+     this.reloadData()
+
+
+    
+    console.log(this.currentQuestion)
+
+
+
   }
 
   createForm() {
-    this.QuestionForm = this.fb.group({
+     this.QuestionForm = this.fb.group({
 
       question: ['', Validators.required ],
       reponses: this.fb.array([
@@ -65,7 +84,7 @@ export class QuestionDetailsComponent implements OnInit {
         })
       ]),
       explication: ['',Validators.required],
-      chapitre: ['',[Validators.required]]
+      chapitre: [this.currentQuestion.quChCode.chNom,[Validators.required]]
 
     })
 
@@ -84,11 +103,21 @@ export class QuestionDetailsComponent implements OnInit {
       enonce: ['',Validators.required],
       reponseCorrecte: ['']}))
   }
+
   supprimerReponse(index) {
     this.reponses.removeAt(index)
   }
 
-  *
+  async reloadData() {
+    this.questionId = this.route.snapshot.params['id']
+
+    this.currentQuestion =  <Question> await this.questionService.getQuestion(this.questionId)
+  
+    console.log(this.currentQuestion)
+    
+  }
+
+  
 
   onValueChanged() {
     if (!this.QuestionForm) {return ;}
@@ -123,33 +152,19 @@ export class QuestionDetailsComponent implements OnInit {
     })
     this.questionFormDirective.resetForm()
 
+
   }
 
 
   onSubmit() {
-    this.questionId++
-    this.question = this.QuestionForm.value
-    this.questions.push(this.question)
-    console.log(this.questions)
-    
-    this.reset()
+    console.log(this.currentQuestion)
+
+
 
   }
   onSubmitExam() {
-    this.questionId++
-    
-    this.question = this.QuestionForm.value
-    this.questions.push(this.question)
-    
-    // for (let i=0;i<this.questions.length;i++) {
-    //   this.questions[i].questionId=i+1
-    //   for (let j=0;j<this.questions[i].reponses.length;j++) {
-    //     this.questions[i].reponses[j].reponseId=j+1
-    //   }
-    // }
+    console.log(this.currentQuestion)
 
-    console.log(this.questions)
-    this.router.navigateByUrl('/finished')
 
   }
 }
