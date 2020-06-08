@@ -63,17 +63,21 @@ export class ExamDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.examId = this.route.snapshot.params['id']
+    this.examService.getExam(this.examId).subscribe(
+      (data) => {
+        console.log(data)
+        this.exam = data
+        console.log(this.exam)
+
+        this.createForm()
+
+      }
+    )
     this.examQuestions= []
     this.themes = []
 
-    this.dataTransferService.getpreviewMessage().subscribe(examen =>    
-    {
-        this.exam = examen
-    })
-    //console.log(this.exam)
 
-    this.createForm()
-
+  
     this.questionService.getQuestionList().subscribe(question => 
       {
         let i=0
@@ -102,14 +106,6 @@ export class ExamDetailsComponent implements OnInit {
   
   }
 
-newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
-  console.log(control.value!==undefined)
-  if (Themes.includes(control.value) ) {
-      return { 'newTheme': true };
-  }
-  return null;
-}
-
   createForm() {
     this.ExamenForm = this.fb.group({
       theme: [this.exam.exThCode.thNom, Validators.required ],
@@ -134,7 +130,6 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
         }
       }
     )
-    //console.log(this.themes)
 
   }
 

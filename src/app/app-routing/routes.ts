@@ -9,18 +9,21 @@ import { ExistingExamsComponent } from '../existing-exams/existing-exams.compone
 import { ExamDetailsComponent } from '../exam-details/exam-details.component'
 import { QuestionDetailsComponent } from '../question-details/question-details.component'
 import { ExistingQuestionsComponent } from '../existing-questions/existing-questions.component'
+import { ChapitresComponent } from '../chapitres/chapitres.component'
+import { ThemesComponent } from '../themes/themes.component'
 
 export const routes:Routes = [
     {path:'home', component: HomeComponent},
     {path: 'exam-interface', component: ExamInterfaceComponent},
     {path: '' , redirectTo: '/home', pathMatch: 'full'},
     {path: 'questions-interface/:id',component: QuestionsInterfaceComponent},
-
+    {path: 'chapitres',component: ChapitresComponent},
+    {path: 'themes',component: ThemesComponent},
     {path: 'about', component: AboutComponent},
     {path: 'finished', component:FinishedComponent},
     {path: 'existing-exams', component: ExistingExamsComponent},
     {path: 'exam-details/:id', component: ExamDetailsComponent},
-    {path: 'question-details/:id' , component: QuestionDetailsComponent},
+    {path: 'question-details/:exid/:quid' , component: QuestionDetailsComponent},
     {path: 'existing-questions/:id', component: ExistingQuestionsComponent},
     {path: '**',redirectTo: '/home'}
 ]

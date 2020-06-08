@@ -31,6 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ExamDetailsComponent } from './exam-details/exam-details.component';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { ExistingQuestionsComponent } from './existing-questions/existing-questions.component';
+import { ThemesComponent } from './themes/themes.component';
+import { ChapitresComponent } from './chapitres/chapitres.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { ExistingQuestionsComponent } from './existing-questions/existing-questi
     ExistingExamsComponent,
     ExamDetailsComponent,
     QuestionDetailsComponent,
-    ExistingQuestionsComponent
+    ExistingQuestionsComponent,
+    ThemesComponent,
+    ChapitresComponent
   ],
   imports: [
     BrowserModule,

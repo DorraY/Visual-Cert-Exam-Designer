@@ -1,11 +1,10 @@
-button a {
-    color: white;
-    text-decoration: none;
-}
-
 .table {
     border-radius: 5px;
     width: 50%;
     margin: auto;
     float: none;
+}
+a {
+    color: white;
+    text-decoration: none;
 }

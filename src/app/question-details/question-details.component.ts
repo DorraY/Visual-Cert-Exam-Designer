@@ -55,19 +55,13 @@ export class QuestionDetailsComponent implements OnInit {
     private choixService: ChoixService,
     private dataTransferService: DataTransferService,
     private fb: FormBuilder) { 
-
-    
   }
 
   ngOnInit() {
 
      this.createForm()
-
-     this.reloadData()
-
-
+     //this.reloadData()
     
-    console.log(this.currentQuestion)
 
 
 
@@ -108,10 +102,10 @@ export class QuestionDetailsComponent implements OnInit {
     this.reponses.removeAt(index)
   }
 
-  async reloadData() {
+  reloadData() {
     this.questionId = this.route.snapshot.params['id']
 
-    this.currentQuestion =  <Question> await this.questionService.getQuestion(this.questionId)
+    //this.currentQuestion =   this.questionService.getQuestion(this.questionId)
   
     console.log(this.currentQuestion)
     

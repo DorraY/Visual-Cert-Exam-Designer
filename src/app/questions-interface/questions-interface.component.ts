@@ -58,7 +58,6 @@ export class QuestionsInterfaceComponent implements OnInit {
     private QuestionService : QuestionService,
     private ChoixService : ChoixService,
     private ChapterService: ChapterService,
-    private ExplicationService: ExplicationService,
     private ExamenService: ExamService) { 
   }
 
@@ -151,12 +150,9 @@ export class QuestionsInterfaceComponent implements OnInit {
 
 
   onSubmit() {
-    this.questionOrdre++
-    console.log(this.chapitre)
-    
+        
     let questionText = this.question.quText
     let questionChapter = this.question.quChCode
-    
 
     this.ExamenService.getExam(this.route.snapshot.params['id']).subscribe(
       (data) => {
@@ -164,16 +160,16 @@ export class QuestionsInterfaceComponent implements OnInit {
         this.question.exCode  = data
         this.question.quText = questionText
         this.question.quChCode = questionChapter
-        this.question.quOrdre = this.questionOrdre
+        this.question.quOrdre = 1
         console.log(this.question)
         this.QuestionService.createQuestion(this.question).subscribe(
           (data) => {
             console.log(data)
-          }
+          }, (error) => {console.log(error)}
         )
       }
     )
-    
+    this.questionOrdre++
     this.reset()
 
   }

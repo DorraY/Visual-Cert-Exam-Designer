@@ -1,0 +1,66 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      
+      <th scope="col">Nom</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let theme of themes">
+      <th scope="row"> {{theme.thNom}}  </th>
+      
+      <!-- <td> 
+        <button type="button" mat-button 
+        class="btn btn-sm btn-block btn-danger " >Supprimer
+        </button>   
+      </td> -->
+      <td>
+        <button type="button" mat-button class="btn btn-sm 
+        btn-block btn-success "
+        (click)="UpdateTheme(theme.thCode)">
+          Modifier
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<div class="container my-4">
+  <div class="border border-light p-3 mb-4">
+    <div class="d-flex align-items-center flex-column justify-content-center h-100">
+      <form novalidate [formGroup]="ThemeForm" 
+      (ngSubmit)="onSubmit()" #tform="ngForm">
+            <table class="form-size">
+              <p>
+                <td >
+                  <mat-form-field class="form-group">
+                    <input  required matInput formControlName="themeNom" id="themeNom" [(ngModel)]="theme.thNom"
+                    placeholder="Nom du thème" type="text">
+                    <mat-error *ngIf="formErrors.themeNom" > {{formErrors.themeNom}} </mat-error>
+                    <mat-error *ngIf="ThemeForm.get('themeNom').touched &&!formErrors.themeNom" >Le nom est obligatoire  </mat-error>
+
+                  </mat-form-field>
+                </td>
+              </p>
+
+              <button type="submit"  mat-button 
+              class="btn btn-lg btn-block btn-success " 
+              [disabled]="ThemeForm.invalid">Valider
+            </button>
+            <button type="button" mat-button class="btn btn-lg btn-block btn-danger " 
+            onclick="reset()" >Reset
+            </button>
+            </table>
+            
+
+
+
+      </form>
+    </div>
+
+  </div>
+</div>
+

@@ -10,10 +10,13 @@
 
                 <div class="row text-center d-flex justify-content-between pt-5 mb-3">
             
-                  <div class="col-md-2 mb-3">
+                  <div class="col-md-2 mb-3 font-weight-bold">
                     <p> 
                       <td >
+                        <label>Question# {{questionOrdre+1 }} </label>
+
                         <mat-form-field class="form-group">
+
                           <textarea matInput formControlName="question" 
                           placeholder="Question" [(ngModel)]="question.quText"  rows="10">  
                           </textarea>

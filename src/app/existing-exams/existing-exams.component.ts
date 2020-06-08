@@ -94,7 +94,7 @@ export class ExistingExamsComponent implements OnInit {
   }
 
   updateExam(id:number) {
-   this.dataTransferService.setpreviewdata(this.examsArray[id-1])
+  //  this.dataTransferService.setpreviewdata(this.examsArray[id-1])
     this.router.navigate(['exam-details', id] )
   }
 
