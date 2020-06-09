@@ -139,6 +139,7 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
   
 
   onSubmit() {
+    console.log(this.exam)
     
     this.examService.createExam(this.exam).subscribe(
       data =>  {  

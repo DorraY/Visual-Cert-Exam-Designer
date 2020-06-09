@@ -106,6 +106,7 @@ export class ChapitresComponent implements OnInit {
 
   onSubmit() {
     
+    this.chapitre.chNom=this.chapitre.chNom.trim()
     this.chapterService.createChapter(this.chapitre).subscribe(
       data =>  {  
         console.log(data)

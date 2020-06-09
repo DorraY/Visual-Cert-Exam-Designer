@@ -46,44 +46,7 @@ export class ExistingExamsComponent implements OnInit {
   }
 
   deleteExam(id: number) {
-    this.questionService.getQuestionList().subscribe(
-      (question) => {
-        for (let i=0;i<question.length;i++) {
-          if (question[i].exCode==id) {
-            this.choixService.getChoixList().subscribe(
-              (choix) => {
-                for (let j=0;j<choix.length;j++) {
-                  if (choix[j].chQuCode.quCode==question[i].quCode) {
-                    this.choixService.deleteChoix(choix[j].choixCode).subscribe(
-                      data => {
-                        console.log(data)
-                      }, error =>console.log(error)
-                    )
-                  }
-                }
-              }
-            )
-            this.explicationService.getExplicationList().subscribe(
-              (explication) => {
-                for (let k=0;k<explication.length;k++) {
-                  if (explication[k].exQucode.quCode==question[i].quCode)  {
-                    this.explicationService.deleteExplication(explication[k].exCode).subscribe(
-                      data => {
-                        console.log(data)
-                      }, error =>console.log(error)
-                    )
-                  }
-                }
-              }
-            )
-            this.questionService.deleteQuestion(question[i].quCode).subscribe(
-              data => {
-                console.log(data)
-              }, error =>console.log(error)
-            )
-          }
-        }
-      })
+
     this.examService.deleteExam(id).subscribe(
       data =>
       {

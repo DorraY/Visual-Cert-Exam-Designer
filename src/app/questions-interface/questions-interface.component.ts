@@ -11,6 +11,8 @@ import { ExplicationService } from '../services/explication.service';
 import { Choix } from '../shared/choice';
 import { ExamService } from '../services/exam-service';
 import { Chapter } from '../shared/chapter';
+import { Explication } from '../shared/explication';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-questions-interface',
@@ -25,7 +27,7 @@ export class QuestionsInterfaceComponent implements OnInit {
   choix: Choix = new Choix()
   chapters
   chapitre: Chapter = new Chapter()
-
+  explication: Explication = new Explication()
   questionOrdre
   
   formErrors = {
@@ -48,7 +50,7 @@ export class QuestionsInterfaceComponent implements OnInit {
     },
     'chapitre': {
       'required': 'Un chapitre est obligatoire'
-    },
+    }
 
   }
 
@@ -57,13 +59,14 @@ export class QuestionsInterfaceComponent implements OnInit {
     private route: ActivatedRoute,
     private QuestionService : QuestionService,
     private ChoixService : ChoixService,
+    private explicationService: ExplicationService,
     private ChapterService: ChapterService,
     private ExamenService: ExamService) { 
   }
 
   ngOnInit() {
     this.chapters = []
-    this.questionOrdre =0
+    this.questionOrdre =1
     this.createForm()
     this.reloadChapters()
   }
@@ -160,7 +163,43 @@ export class QuestionsInterfaceComponent implements OnInit {
         this.question.exCode  = data
         this.question.quText = questionText
         this.question.quChCode = questionChapter
-        this.question.quOrdre = 1
+        
+        this.question.quOrdre = this.questionOrdre
+        console.log(this.question)
+        this.QuestionService.createQuestion(this.question).subscribe(
+          (data) => {
+            console.log(data)
+            let explicationText = this.explication.exTextExplanation
+            console.log(explicationText)
+            this.explication.exQucode = <Question> data
+            this.explication.exTextExplanation = "test"
+
+            console.log(this.explication)
+            this.explicationService.createExplication(this.explication).subscribe(
+              (data) => {
+                console.log(data)
+              }, (error) => {console.log(error)}
+            )
+          }, (error) => {console.log(error)}
+        )
+      }
+    )
+    this.questionOrdre++
+    this.reset()
+
+  }
+  onSubmitExam() {
+    let questionText = this.question.quText
+    let questionChapter = this.question.quChCode
+
+    this.ExamenService.getExam(this.route.snapshot.params['id']).subscribe(
+      (data) => {
+        console.log(data)
+        this.question.exCode  = data
+        this.question.quText = questionText
+        this.question.quChCode = questionChapter
+        
+        this.question.quOrdre = this.questionOrdre
         console.log(this.question)
         this.QuestionService.createQuestion(this.question).subscribe(
           (data) => {
@@ -171,20 +210,6 @@ export class QuestionsInterfaceComponent implements OnInit {
     )
     this.questionOrdre++
     this.reset()
-
-  }
-  onSubmitExam() {
-    this.questionOrdre++
-    
-    this.question = this.QuestionForm.value
-    
-    // for (let i=0;i<this.questions.length;i++) {
-    //   this.questions[i].questionId=i+1
-    //   for (let j=0;j<this.questions[i].reponses.length;j++) {
-    //     this.questions[i].reponses[j].reponseId=j+1
-    //   }
-    // }
-
     
     this.router.navigateByUrl('/finished')
 

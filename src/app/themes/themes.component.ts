@@ -108,6 +108,7 @@ export class ThemesComponent implements OnInit {
 
   onSubmit() {
     
+    this.theme.thNom = this.theme.thNom.trim()
     this.themeService.createTheme(this.theme).subscribe(
       data =>  {  
         console.log(data)

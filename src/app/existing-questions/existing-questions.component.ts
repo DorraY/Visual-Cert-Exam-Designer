@@ -71,13 +71,14 @@ export class ExistingQuestionsComponent implements OnInit {
             if (question[i].quCode==this.explicationsArray[j].exQucode.quCode) {
               question[i].Explication = this.explicationsArray[j]
               this.questionsArray.push(question[i])
+              
             }
           }
         }
         i++
       }
     }  )
-    //console.log(this.questionsArray)
+    console.log(this.questionsArray)
 
 
 
@@ -86,31 +87,6 @@ export class ExistingQuestionsComponent implements OnInit {
 
   deleteQuestion(id: number) {
     let associatedExplicationId 
-
-    this.choix = this.choixService.getChoixList()
-
-    this.choix.subscribe((data) => {
-      for (let i=0;i<data.length;i++) {
-        if (data[i].chQuCode.quCode==id) {
-          this.choixService.deleteChoix(data[i].choixCode)
-  
-        }
-      }
-    })
-
-    this.explicationService.getExplicationList().subscribe(
-      (explication) => {
-        for (let i=0;i<explication.length;i++) {
-          if (explication.exQucode.quCode==id) {
-            this.explicationService.deleteExplication(explication.exCode).subscribe(
-              data => {
-                console.log(data)
-              }, error =>console.log(error)
-            )
-          }
-        }
-      }
-    )
 
     this.questionsService.deleteQuestion(id).subscribe(
       data =>

@@ -13,7 +13,7 @@
                   <div class="col-md-2 mb-3 font-weight-bold">
                     <p> 
                       <td >
-                        <label>Question# {{questionOrdre+1 }} </label>
+                        <label>Question# {{questionOrdre }} </label>
 
                         <mat-form-field class="form-group">
 
@@ -53,6 +53,7 @@
                       <td >
                         <mat-form-field class="form-group">
                           <textarea matInput formControlName="explication" 
+                          [(ngModel)]="explication.exTextExplanation"
                           placeholder="Explication"  rows="10">  
                           </textarea>
                           <mat-error *ngIf="formErrors.explication" > {{formErrors.explication}} </mat-error>
