@@ -1,7 +1,6 @@
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Ordre</th>
       <th scope="col">Enoncé</th>
       <th scope="col">Chapitre</th>
@@ -13,10 +12,10 @@
   <tbody>
     <tr *ngFor="let question of questionsArray" > 
       <!-- ; let explication of explicationsArray -->
-      <th scope="row"> {{question.quCode}}  </th>
-      <td> {{question.ordre}} </td>
+      <th scope="row"> {{question.quOrdre}}  </th>
+      
       <td>  {{question.quText}}  </td>
-      <td> {{question.chCode.chNom}} </td>  
+      <td> {{question.quChCode.chNom}} </td>  
       <td> {{ question.Explication.exTextExplanation}}  </td>
       <td> 
         <button type="button" mat-button  

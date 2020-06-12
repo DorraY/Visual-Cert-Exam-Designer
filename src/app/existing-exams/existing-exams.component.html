@@ -1,7 +1,6 @@
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Nom</th>
       <th scope="col">Durée</th>
       <th scope="col">Score</th>
@@ -11,8 +10,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let exam of examsArray">
-      <th scope="row"> {{exam.exId}}  </th>
-      <td> {{exam.exNom}} </td>
+      <th scope="row"> {{exam.exNom}}  </th>
       <td>  {{exam.exTime}}  </td>
       <td> {{exam.exScore}} </td>
       <td> {{exam.exThCode.thNom}} </td>

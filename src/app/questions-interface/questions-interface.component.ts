@@ -13,6 +13,7 @@ import { ExamService } from '../services/exam-service';
 import { Chapter } from '../shared/chapter';
 import { Explication } from '../shared/explication';
 import { error } from 'protractor';
+import { DataTransferService } from '../services/data-transfer.service';
 
 @Component({
   selector: 'app-questions-interface',
@@ -55,6 +56,7 @@ export class QuestionsInterfaceComponent implements OnInit {
   }
 
   constructor(private router: Router, 
+    private dataTransferService: DataTransferService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private QuestionService : QuestionService,
@@ -65,8 +67,14 @@ export class QuestionsInterfaceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataTransferService.getpreviewMessage().subscribe(data => {
+      console.log(data)
+      this.questionOrdre = data
+
+    })
+    console.log(this.questionOrdre)
     this.chapters = []
-    this.questionOrdre =1
+    this.questionOrdre =0
     this.createForm()
     this.reloadChapters()
   }
@@ -156,6 +164,8 @@ export class QuestionsInterfaceComponent implements OnInit {
         
     let questionText = this.question.quText
     let questionChapter = this.question.quChCode
+    let explicationText = this.explication.exTextExplanation
+    console.log(explicationText)
 
     this.ExamenService.getExam(this.route.snapshot.params['id']).subscribe(
       (data) => {
@@ -163,17 +173,15 @@ export class QuestionsInterfaceComponent implements OnInit {
         this.question.exCode  = data
         this.question.quText = questionText
         this.question.quChCode = questionChapter
-        
+        console.log(explicationText)        
+        this.explication.exTextExplanation = explicationText
+        console.log(this.explication.exTextExplanation)
         this.question.quOrdre = this.questionOrdre
         console.log(this.question)
         this.QuestionService.createQuestion(this.question).subscribe(
           (data) => {
             console.log(data)
-            let explicationText = this.explication.exTextExplanation
-            console.log(explicationText)
             this.explication.exQucode = <Question> data
-            this.explication.exTextExplanation = "test"
-
             console.log(this.explication)
             this.explicationService.createExplication(this.explication).subscribe(
               (data) => {
@@ -191,6 +199,8 @@ export class QuestionsInterfaceComponent implements OnInit {
   onSubmitExam() {
     let questionText = this.question.quText
     let questionChapter = this.question.quChCode
+    let explicationText = this.explication.exTextExplanation
+    console.log(explicationText)
 
     this.ExamenService.getExam(this.route.snapshot.params['id']).subscribe(
       (data) => {
@@ -198,12 +208,21 @@ export class QuestionsInterfaceComponent implements OnInit {
         this.question.exCode  = data
         this.question.quText = questionText
         this.question.quChCode = questionChapter
-        
+        console.log(explicationText)        
+        this.explication.exTextExplanation = explicationText
+        console.log(this.explication.exTextExplanation)
         this.question.quOrdre = this.questionOrdre
         console.log(this.question)
         this.QuestionService.createQuestion(this.question).subscribe(
           (data) => {
             console.log(data)
+            this.explication.exQucode = <Question> data
+            console.log(this.explication)
+            this.explicationService.createExplication(this.explication).subscribe(
+              (data) => {
+                console.log(data)
+              }, (error) => {console.log(error)}
+            )
           }, (error) => {console.log(error)}
         )
       }

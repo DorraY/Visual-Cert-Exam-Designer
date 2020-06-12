@@ -44,7 +44,7 @@ export class ExistingQuestionsComponent implements OnInit {
     this.questionsArray=[]
     this.explicationsArray=[]
     this.reloadData()
-    //console.log(this.questionsArray)
+    console.log(this.questionsArray)
 
   }
 
@@ -102,6 +102,12 @@ export class ExistingQuestionsComponent implements OnInit {
   }
 
   addNewQuestion() {
+
+    let maximumQuestionOrdre = Math.max.apply(Math, this.questionsArray.map(function(question) 
+    { return question.quOrdre }))
+    
+    this.dataTransferService.setpreviewdata(maximumQuestionOrdre)
+
     this.router.navigate(['questions-interface', this.examId] )
   }
 
