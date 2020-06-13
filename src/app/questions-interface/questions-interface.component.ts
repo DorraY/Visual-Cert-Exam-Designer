@@ -66,6 +66,10 @@ export class QuestionsInterfaceComponent implements OnInit {
     private ExamenService: ExamService) { 
   }
 
+  reloadExisitngQuestion() {
+    
+  }
+
   ngOnInit() {
     this.dataTransferService.getpreviewMessage().subscribe(data => {
       console.log(data)
