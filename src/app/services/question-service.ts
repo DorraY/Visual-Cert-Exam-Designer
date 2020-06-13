@@ -12,7 +12,7 @@ export class QuestionService {
   constructor(private http: HttpClient) { }
 
    getQuestion(id:number){
-    return  this.http.get(`${this.baseUrl}/${id}`).toPromise()
+    return  this.http.get(`${this.baseUrl}/${id}`)
   }
 
   getQuestionList(): Observable<any> {

@@ -5,8 +5,6 @@ import {Themes,Exam} from '../shared/exam'
 import { ExamService } from '../services/exam-service';
 import { DataTransferService } from '../services/data-transfer.service';
 import { ThemeService } from '../services/theme.service';
-import { Observable } from 'rxjs';
-import { cp } from '@angular/core/src/render3';
 import { Theme } from '../shared/theme';
 
 @Component({
@@ -30,7 +28,6 @@ export class ExamInterfaceComponent implements OnInit {
     'nom': '',
     'temps': '',
     'score': ''
-
   }
 
   validationMessages = {
@@ -68,30 +65,12 @@ export class ExamInterfaceComponent implements OnInit {
     )
   }
 
-  // save(){
-  //   this.examService.createExam(this.exam).subscribe(
-  //     data =>  {  
-  //       console.log(data)
-  //     }
-  //     , error => console.log(error)
-  //   )
-  //   this.exam = new Exam()    
-
-  // }
 
   ngOnInit() {
     this.themes = []
     this.createForm()
     this.reloadThemes()
   }
-
-newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
-  console.log(control.value!==undefined)
-  if (Themes.includes(control.value) ) {
-    return { 'newTheme': true };
-  }
-  return null;
-}
 
   createForm() {
     this.ExamenForm = this.fb.group({
@@ -145,11 +124,6 @@ newThemeValidator(control: AbstractControl): { [key: string]: boolean } | null {
       data =>  {  
         console.log(data)
         let properiete = (Object.keys(data)[0])
-        
-
-        
-        
-        
         this.router.navigate(['/questions-interface',data[properiete]])
       }
       , error => console.log(error)

@@ -19,7 +19,7 @@ import { HeaderComponent } from './header/header.component'
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {MatInputModule, MatAutocompleteModule} from '@angular/material';
 import { MatDialogModule,MatDialogRef } from '@angular/material/dialog';
 
@@ -33,6 +33,7 @@ import { QuestionDetailsComponent } from './question-details/question-details.co
 import { ExistingQuestionsComponent } from './existing-questions/existing-questions.component';
 import { ThemesComponent } from './themes/themes.component';
 import { ChapitresComponent } from './chapitres/chapitres.component';
+import { ChoixInterfaceComponent } from './choix-interface/choix-interface.component';
 
 
 @NgModule({
@@ -51,7 +52,9 @@ import { ChapitresComponent } from './chapitres/chapitres.component';
     QuestionDetailsComponent,
     ExistingQuestionsComponent,
     ThemesComponent,
-    ChapitresComponent
+    ChapitresComponent,
+    ChoixInterfaceComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,8 @@ import { ChapitresComponent } from './chapitres/chapitres.component';
     MatDialogModule,
     FlexLayoutModule,
     MatAutocompleteModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
     
 
 

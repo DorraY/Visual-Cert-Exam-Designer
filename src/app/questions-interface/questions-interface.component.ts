@@ -25,11 +25,11 @@ export class QuestionsInterfaceComponent implements OnInit {
   QuestionForm: FormGroup
   
   question: Question = new Question()
-  choix: Choix = new Choix()
   chapters
   chapitre: Chapter = new Chapter()
   explication: Explication = new Explication()
-  questionOrdre
+  questionOrdre=1
+  exisitngQuestions= []
   
   formErrors = {
     'question': '',
@@ -60,25 +60,35 @@ export class QuestionsInterfaceComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private QuestionService : QuestionService,
-    private ChoixService : ChoixService,
     private explicationService: ExplicationService,
     private ChapterService: ChapterService,
     private ExamenService: ExamService) { 
   }
 
   reloadExisitngQuestion() {
-    
+    this.QuestionService.getQuestionList().subscribe(data => {
+      for (let i=0;i<data.length;i++) {
+        this.exisitngQuestions.push(data[i].quOrdre)
+
+      }
+    }) 
+
+    let maximumValue 
+
+    maximumValue = Math.max(...this.exisitngQuestions)
+
+    console.log(this.exisitngQuestions.lastIndexOf)
+    console.log(maximumValue)
+
+  
   }
 
   ngOnInit() {
-    this.dataTransferService.getpreviewMessage().subscribe(data => {
-      console.log(data)
-      this.questionOrdre = data
-
-    })
-    console.log(this.questionOrdre)
+    
+    this.exisitngQuestions=[]
+    this.reloadExisitngQuestion()
     this.chapters = []
-    this.questionOrdre =0
+    
     this.createForm()
     this.reloadChapters()
   }
@@ -98,12 +108,6 @@ export class QuestionsInterfaceComponent implements OnInit {
     this.QuestionForm = this.fb.group({
 
       question: ['', Validators.required ],
-      reponses: this.fb.array([
-        this.fb.group({
-          enonce: ['',Validators.required],
-          reponseCorrecte: [''],
-        })
-      ]),
       explication: ['',Validators.required],
       chapitre: ['',[Validators.required]]
 
@@ -114,20 +118,6 @@ export class QuestionsInterfaceComponent implements OnInit {
     this.onValueChanged()
 
   }
-
-  get reponses() {
-    return this.QuestionForm.get('reponses') as FormArray
-  }
-
-  ajoutReponse() {
-    this.reponses.push(this.fb.group({
-      enonce: ['',Validators.required],
-      reponseCorrecte: ['']}))
-  }
-  supprimerReponse(index) {
-    this.reponses.removeAt(index)
-  }
-
 
   onValueChanged() {
     if (!this.QuestionForm) {return ;}
@@ -155,9 +145,6 @@ export class QuestionsInterfaceComponent implements OnInit {
       question: '',
       explication: '',
       chapitre: '',
-      reponses: '',
-      reponseCorrecte: ''
-
     })
     this.questionFormDirective.resetForm()
 
@@ -183,13 +170,16 @@ export class QuestionsInterfaceComponent implements OnInit {
         this.question.quOrdre = this.questionOrdre
         console.log(this.question)
         this.QuestionService.createQuestion(this.question).subscribe(
-          (data) => {
-            console.log(data)
-            this.explication.exQucode = <Question> data
+          (QuData) => {
+            console.log(QuData)
+            this.explication.exQucode = <Question> QuData
             console.log(this.explication)
             this.explicationService.createExplication(this.explication).subscribe(
               (data) => {
                 console.log(data)
+            console.log(QuData)
+            let properiete = (Object.keys(QuData)[0])
+            this.router.navigate(['/choix-interface',this.route.snapshot.params['id'],QuData[properiete]])
               }, (error) => {console.log(error)}
             )
           }, (error) => {console.log(error)}
@@ -201,6 +191,7 @@ export class QuestionsInterfaceComponent implements OnInit {
 
   }
   onSubmitExam() {
+
     let questionText = this.question.quText
     let questionChapter = this.question.quChCode
     let explicationText = this.explication.exTextExplanation
@@ -218,13 +209,18 @@ export class QuestionsInterfaceComponent implements OnInit {
         this.question.quOrdre = this.questionOrdre
         console.log(this.question)
         this.QuestionService.createQuestion(this.question).subscribe(
-          (data) => {
-            console.log(data)
-            this.explication.exQucode = <Question> data
+          (QuData) => {
+            console.log(QuData)
+            this.explication.exQucode = <Question> QuData
             console.log(this.explication)
             this.explicationService.createExplication(this.explication).subscribe(
               (data) => {
                 console.log(data)
+            console.log(QuData)
+            let properiete = (Object.keys(QuData)[0])
+            this.router.navigate(['/choix-interface',this.route.snapshot.params['id'],QuData[properiete]])
+            
+
               }, (error) => {console.log(error)}
             )
           }, (error) => {console.log(error)}
@@ -234,6 +230,7 @@ export class QuestionsInterfaceComponent implements OnInit {
     this.questionOrdre++
     this.reset()
     
+
     this.router.navigateByUrl('/finished')
 
   }

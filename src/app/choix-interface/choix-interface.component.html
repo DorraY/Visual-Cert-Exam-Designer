@@ -1,0 +1,51 @@
+
+  <div class="container my-4" >
+    <div class="border border-light p-3 mb-4">
+      <div class="d-flex align-items-center flex-column justify-content-center h-100">
+        
+        <form  novalidate [formGroup]="ChoixForm"
+         #cform="ngForm" >
+
+        <h6 class="row font-weight-bold">
+          <label for="">Réponse {{ReponseIndex }} </label>          </h6>
+
+          <mat-form-field class="form-group">
+            <input [(ngModel)]="reponseCorrect" value="false" formControlName="correct"  type="checkbox"   > 
+            <textarea required matInput 
+            [(ngModel)]="choix.chText" 
+            formControlName="enonce" 
+             rows="5" cols="10">  
+            </textarea> 
+            <mat-error *ngIf="formErrors.enonce" > {{formErrors.enonce}} </mat-error>
+            <mat-error *ngIf="ChoixForm.get('enonce').touched &&!formErrors.enonce" >La réponse est obligatoire  </mat-error>  
+          </mat-form-field>
+          <table class="form-size">
+
+          <button type="submit"  mat-button (click)="ajouterChoix()"
+          class="btn btn-xs btn-block btn-success " 
+          [disabled]="ChoixForm.invalid">Valider le Choix
+        </button>
+        <button type="button"  mat-button (click)="ajouterQuestion()"
+          class="btn btn-xs btn-block btn-success " 
+          >Nouvelle question
+        </button>
+        <button type="button"  mat-button  (click)="terminer()"
+          class="btn btn-xs btn-block btn-success " 
+          >Terminer l'examen
+        </button>
+        <button type="button" mat-button 
+        class="btn btn-xs btn-block btn-danger " 
+        onclick="reset()" >Reset
+        </button>
+
+         </table>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+

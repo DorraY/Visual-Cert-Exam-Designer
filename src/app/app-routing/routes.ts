@@ -11,6 +11,7 @@ import { QuestionDetailsComponent } from '../question-details/question-details.c
 import { ExistingQuestionsComponent } from '../existing-questions/existing-questions.component'
 import { ChapitresComponent } from '../chapitres/chapitres.component'
 import { ThemesComponent } from '../themes/themes.component'
+import { ChoixInterfaceComponent } from '../choix-interface/choix-interface.component'
 
 export const routes:Routes = [
     {path:'home', component: HomeComponent},
@@ -25,5 +26,5 @@ export const routes:Routes = [
     {path: 'exam-details/:id', component: ExamDetailsComponent},
     {path: 'question-details/:exid/:quid' , component: QuestionDetailsComponent},
     {path: 'existing-questions/:id', component: ExistingQuestionsComponent},
-    {path: '**',redirectTo: '/home'}
+    {path: 'choix-interface/:exId/:quId', component: ChoixInterfaceComponent}
 ]

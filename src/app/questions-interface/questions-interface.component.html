@@ -13,7 +13,7 @@
                   <div class="col-md-2 mb-3 font-weight-bold">
                     <p> 
                       <td >
-                        <label>Question# {{questionOrdre+1 }} </label>
+                        <label>Question# {{questionOrdre}} </label>
 
                         <mat-form-field class="form-group">
 
@@ -66,31 +66,6 @@
                 </div>
               </div>
               
-              <div class="container" >
-                <div class="row text-center d-flex justify-content-between pt-5 mb-3">
-                  <div class="row" formArrayName="reponses">
-                    <div  *ngFor="let item of reponses.controls;
-                    let ReponseIndex=index" [formGroupName]="ReponseIndex">
-
-                    <h6 class="row font-weight-bold">
-                      <label for="">Réponse {{ReponseIndex +1 }} </label>
-                      <mat-form-field class="form-group">
-                        <input [(ngModel)]="choix.chCorrect" formControlName="reponseCorrecte" type="checkbox" name="Rep1"  > 
-                        <textarea required matInput 
-                        [(ngModel)]="choix.chText" 
-                        formControlName="enonce" 
-                         rows="5">  
-                        </textarea>   
-                      </mat-form-field>
-                      </h6>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              
-
               <div class="container">
 
                 <div class="row text-center d-flex justify-content-between pt-5 mb-3">
