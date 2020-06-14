@@ -239,10 +239,7 @@ export class QuestionsInterfaceComponent implements OnInit {
       }
     )
     this.reset()
-    
-
-    this.router.navigateByUrl('/finished')
-
+  
   }
 
 }

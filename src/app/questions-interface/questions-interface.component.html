@@ -70,40 +70,23 @@
 
                 <div class="row text-center d-flex justify-content-between pt-5 mb-3">
             
-                  <div class="col-md-2 mb-3">
-                          <button type="button"  
-                          mat-button class="btn btn-lg  
-                          btn-block btn-success " (click)="onSubmitExam()"
-                          [disabled]="QuestionForm.invalid">Valider examen
-                        </button>
-                  </div>
-            
-            
+
+          
                   <div class="col-md-2 mb-3">
                         <button type="button"
-                         mat-button class="btn btn-lg  btn-block btn-danger " 
-                        onclick="reset()" >Reset question
+                         mat-button class="btn btn-lg  btn-inline btn-danger " 
+                        onclick="reset()" >Reset Question
                         </button> 
                   </div>
 
-                  <div class="col-md-2 mb-3">
-                    <button (click)="ajoutReponse()" 
-                    type="button" mat-button class="btn btn-lg  btn-block btn-primary " >Ajout réponse
-                    </button> 
-                  </div>
-             
-                  <div class="col-md-2 mb-3">
-                    <button type="button" mat-button 
-                    (click)="supprimerReponse(ReponseIndex+1)"
-                    class="btn btn-lg btn-block btn-danger " >Supprimer réponse
-                    </button> 
-                  </div>
+
+            
 
                   <div class="col-md-2 mb-3">
 
                     <button type="submit" mat-button 
-                    class="btn btn-lg btn-block btn-success " 
-                    [disabled]="QuestionForm.invalid" >Ajout question
+                    class="btn btn-lg btn-inline btn-success " 
+                    [disabled]="QuestionForm.invalid" >Valider Question
                     </button> 
               </div>
                 </div>
