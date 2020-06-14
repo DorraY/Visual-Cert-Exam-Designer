@@ -28,8 +28,8 @@ export class QuestionsInterfaceComponent implements OnInit {
   chapters
   chapitre: Chapter = new Chapter()
   explication: Explication = new Explication()
-  questionOrdre=1
-  exisitngQuestions= []
+  questionOrdre
+  exisitngQuestions
   
   formErrors = {
     'question': '',
@@ -65,32 +65,39 @@ export class QuestionsInterfaceComponent implements OnInit {
     private ExamenService: ExamService) { 
   }
 
-  reloadExisitngQuestion() {
+  reloadExisitngQuestionOrdre() {
+    
     this.QuestionService.getQuestionList().subscribe(data => {
       for (let i=0;i<data.length;i++) {
-        this.exisitngQuestions.push(data[i].quOrdre)
+        if(data[i].exCode.exId==this.route.snapshot.params['id']) {
+          
+          this.exisitngQuestions.push(data[i])
+        }
 
       }
+      
+      this.questionOrdre = (Math.max.apply(Math, this.exisitngQuestions.map(function(o) { return o.quOrdre; }))) +1
+
+      if (this.questionOrdre===-Infinity) {
+        this.questionOrdre=1
+      }
+
     }) 
 
-    let maximumValue 
 
-    maximumValue = Math.max(...this.exisitngQuestions)
-
-    console.log(this.exisitngQuestions.lastIndexOf)
-    console.log(maximumValue)
 
   
   }
 
   ngOnInit() {
-    
+
     this.exisitngQuestions=[]
-    this.reloadExisitngQuestion()
+    this.reloadExisitngQuestionOrdre()
     this.chapters = []
-    
     this.createForm()
     this.reloadChapters()
+
+    
   }
 
   reloadChapters() {
@@ -152,6 +159,8 @@ export class QuestionsInterfaceComponent implements OnInit {
 
 
   onSubmit() {
+    
+    console.log(this.questionOrdre)
         
     let questionText = this.question.quText
     let questionChapter = this.question.quChCode
@@ -186,11 +195,13 @@ export class QuestionsInterfaceComponent implements OnInit {
         )
       }
     )
-    this.questionOrdre++
     this.reset()
 
   }
   onSubmitExam() {
+
+    console.log(this.questionOrdre)
+
 
     let questionText = this.question.quText
     let questionChapter = this.question.quChCode
@@ -227,7 +238,6 @@ export class QuestionsInterfaceComponent implements OnInit {
         )
       }
     )
-    this.questionOrdre++
     this.reset()
     
 
