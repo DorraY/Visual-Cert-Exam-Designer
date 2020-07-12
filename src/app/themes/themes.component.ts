@@ -87,13 +87,14 @@ export class ThemesComponent implements OnInit {
     this.themeFormDirective.resetForm()
   }
 
-  UpdateTheme(id:number) {
-    console.log(document.querySelector('#themeNom').nodeValue)
-    document.querySelector('#themeNom').nodeValue = "test"
+  DeleteTheme(id:number) {
+
     console.log(id)
-    this.themeService.getTheme(id).subscribe(
+    this.themeService.deleteTheme(id).subscribe(
       (data) => {
         console.log(data)
+        location.reload()
+
         
 
       }

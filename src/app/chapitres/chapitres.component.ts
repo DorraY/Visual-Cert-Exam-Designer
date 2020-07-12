@@ -87,12 +87,13 @@ export class ChapitresComponent implements OnInit {
     this.themeFormDirective.resetForm()
   }
 
-  UpdateTheme(id:number) {
+  DeleteChapter(id:number) {
     console.log(id)
-    this.chapterService.getChapter(id).subscribe(
+    this.chapterService.deleteChapter(id).subscribe(
       (data) => {
         console.log(data)
-        
+        location.reload()
+
 
       }
     )
@@ -110,9 +111,7 @@ export class ChapitresComponent implements OnInit {
     this.chapterService.createChapter(this.chapitre).subscribe(
       data =>  {  
         console.log(data)
-        location.reload()
-        
-        
+        location.reload()        
       }
       , error => console.log(error)
     )

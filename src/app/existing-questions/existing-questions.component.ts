@@ -98,7 +98,8 @@ export class ExistingQuestionsComponent implements OnInit {
   }
 
   updateQuestion(id:number) {
-    this.router.navigate(['question-details', {exid: this.examId , quid:id}] )
+    this.router.navigate(['/question-details',this.examId,id])
+
   }
 
   addNewQuestion() {

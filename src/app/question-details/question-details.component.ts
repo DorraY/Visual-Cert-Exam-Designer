@@ -60,7 +60,7 @@ export class QuestionDetailsComponent implements OnInit {
   ngOnInit() {
 
      this.createForm()
-     //this.reloadData()
+     this.reloadData()
     
 
 
@@ -88,22 +88,11 @@ export class QuestionDetailsComponent implements OnInit {
 
   }
 
-  get reponses() {
-    return this.QuestionForm.get('reponses') as FormArray
-  }
 
-  ajoutReponse() {
-    this.reponses.push(this.fb.group({
-      enonce: ['',Validators.required],
-      reponseCorrecte: ['']}))
-  }
 
-  supprimerReponse(index) {
-    this.reponses.removeAt(index)
-  }
 
   reloadData() {
-    this.questionId = this.route.snapshot.params['id']
+    this.questionId = this.route.snapshot.params['quid']
 
     //this.currentQuestion =   this.questionService.getQuestion(this.questionId)
   

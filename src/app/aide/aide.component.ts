@@ -39,8 +39,13 @@ export class AideComponent implements OnInit {
         this.paragraphe1 = "Tous les champs sont obligatoires. "
         this.paragraphe2 = "Le score et la durée doivent être des entiers positifs. La durée maximale est 360 minutes"
         break;
-
+      case "/themes":
+          this.paragraphe1 = "Vous pouvez insérer, supprimer et visualiser vos thèmes ici. "
+          this.paragraphe2 = ""
+          break;
     }
+
+
   }
 
   ngOnDestroy()	{

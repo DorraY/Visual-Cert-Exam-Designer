@@ -185,8 +185,8 @@ export class QuestionsInterfaceComponent implements OnInit {
             console.log(this.explication)
             this.explicationService.createExplication(this.explication).subscribe(
               (data) => {
-                console.log(data)
-            console.log(QuData)
+            
+            console.log(data)
             let properiete = (Object.keys(QuData)[0])
             this.router.navigate(['/choix-interface',this.route.snapshot.params['id'],QuData[properiete]])
               }, (error) => {console.log(error)}
