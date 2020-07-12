@@ -80,12 +80,21 @@
                   </div>
 
                   <div class="col-md-2 mb-3">
+                    <button type="button" mat-button 
+                    class="btn btn-lg btn-inline btn-primary " >
+                    <a (click)="openExistingQuestions()" mat-button >
+                      Questions Existantes
+                    </a>
+                    </button> 
+                  </div>
 
+                  <div class="col-md-2 mb-3">
                     <button type="submit" mat-button 
                     class="btn btn-lg btn-inline btn-success " 
                     [disabled]="QuestionForm.invalid" >Valider Question
                     </button> 
-              </div>
+                  </div>
+
                 </div>
               </div>
             </table>

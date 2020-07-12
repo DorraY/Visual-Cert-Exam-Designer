@@ -34,6 +34,8 @@ import { ExistingQuestionsComponent } from './existing-questions/existing-questi
 import { ThemesComponent } from './themes/themes.component';
 import { ChapitresComponent } from './chapitres/chapitres.component';
 import { ChoixInterfaceComponent } from './choix-interface/choix-interface.component';
+import { QuestionsComponent } from './questions/questions.component';
+import { ChoicesComponent } from './choices/choices.component';
 
 
 @NgModule({
@@ -53,7 +55,9 @@ import { ChoixInterfaceComponent } from './choix-interface/choix-interface.compo
     ExistingQuestionsComponent,
     ThemesComponent,
     ChapitresComponent,
-    ChoixInterfaceComponent
+    ChoixInterfaceComponent,
+    QuestionsComponent,
+    ChoicesComponent
     
   ],
   imports: [
@@ -77,7 +81,7 @@ import { ChoixInterfaceComponent } from './choix-interface/choix-interface.compo
 
   ],
   entryComponents: [
-    AboutComponent,AideComponent
+    AboutComponent,AideComponent, QuestionsComponent,ChoicesComponent
   ],
   providers: [{
     provide: MatDialogRef,

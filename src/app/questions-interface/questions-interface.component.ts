@@ -14,6 +14,9 @@ import { Chapter } from '../shared/chapter';
 import { Explication } from '../shared/explication';
 import { error } from 'protractor';
 import { DataTransferService } from '../services/data-transfer.service';
+import { ExistingQuestionsComponent } from '../existing-questions/existing-questions.component';
+import { QuestionsComponent } from '../questions/questions.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-questions-interface',
@@ -21,6 +24,7 @@ import { DataTransferService } from '../services/data-transfer.service';
   styleUrls: ['./questions-interface.component.css']
 })
 export class QuestionsInterfaceComponent implements OnInit {
+  [x: string]: any;
   @ViewChild('qform') questionFormDirective
   QuestionForm: FormGroup
   
@@ -56,6 +60,7 @@ export class QuestionsInterfaceComponent implements OnInit {
   }
 
   constructor(private router: Router, 
+    public dialog: MatDialog,
     private dataTransferService: DataTransferService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -66,22 +71,16 @@ export class QuestionsInterfaceComponent implements OnInit {
   }
 
   reloadExisitngQuestionOrdre() {
-    
     this.QuestionService.getQuestionList().subscribe(data => {
       for (let i=0;i<data.length;i++) {
-        if(data[i].exCode.exId==this.route.snapshot.params['id']) {
-          
+        if(data[i].exCode.exId==this.route.snapshot.params['id']) { 
           this.exisitngQuestions.push(data[i])
         }
-
       }
-      
       this.questionOrdre = (Math.max.apply(Math, this.exisitngQuestions.map(function(o) { return o.quOrdre; }))) +1
-
       if (this.questionOrdre===-Infinity) {
         this.questionOrdre=1
       }
-
     }) 
 
 
@@ -202,7 +201,6 @@ export class QuestionsInterfaceComponent implements OnInit {
 
     console.log(this.questionOrdre)
 
-
     let questionText = this.question.quText
     let questionChapter = this.question.quChCode
     let explicationText = this.explication.exTextExplanation
@@ -240,6 +238,10 @@ export class QuestionsInterfaceComponent implements OnInit {
     )
     this.reset()
   
+  }
+
+  openExistingQuestions() {
+    this.dialog.open(QuestionsComponent,{width:'800px',height:'500px'})
   }
 
 }

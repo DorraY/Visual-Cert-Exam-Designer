@@ -19,7 +19,6 @@ export class ExistingExamsComponent implements OnInit {
   examsArray: Exam[]
   
   constructor(
-    private dataTransferService: DataTransferService , 
     private examService: ExamService,
     private router: Router,
     private questionService: QuestionService,

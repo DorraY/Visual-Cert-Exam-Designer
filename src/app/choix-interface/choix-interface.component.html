@@ -11,10 +11,8 @@
 
           <mat-form-field class="form-group">
             <input [(ngModel)]="reponseCorrect" value="false" formControlName="correct"  type="checkbox"   > 
-            <textarea required matInput 
-            [(ngModel)]="choix.chText" 
-            formControlName="enonce" 
-             rows="5" cols="10">  
+            <textarea required matInput [(ngModel)]="choix.chText"
+             formControlName="enonce"  rows="5" cols="10">  
             </textarea> 
             <mat-error *ngIf="formErrors.enonce" > {{formErrors.enonce}} </mat-error>
             <mat-error *ngIf="ChoixForm.get('enonce').touched &&!formErrors.enonce" >La réponse est obligatoire  </mat-error>  
@@ -36,6 +34,13 @@
         <button type="button" mat-button 
         class="btn btn-xs btn-block btn-danger " 
         onclick="reset()" >Reset
+        </button>
+
+        <button type="button" mat-button 
+        class="btn btn-xs btn-block btn-primary ">
+        <a (click)="openExistingResponses()" mat-button >
+          Réponses saisies
+        </a>
         </button>
 
          </table>

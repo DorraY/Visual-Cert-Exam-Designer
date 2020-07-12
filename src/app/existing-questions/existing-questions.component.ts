@@ -9,6 +9,8 @@ import { Explication } from '../shared/explication';
 import { ExplicationService } from '../services/explication.service';
 import { Choix } from '../shared/choice';
 import { ChoixService } from '../services/choix.service';
+import { ChoicesComponent } from '../choices/choices.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-existing-questions',
@@ -29,6 +31,7 @@ export class ExistingQuestionsComponent implements OnInit {
   constructor(
     private examService: ExamService, 
     private router: Router,
+    public dialog: MatDialog,
     private dataTransferService: DataTransferService,
     private questionsService: QuestionService,
     private route: ActivatedRoute,
@@ -110,6 +113,16 @@ export class ExistingQuestionsComponent implements OnInit {
     this.dataTransferService.setpreviewdata(maximumQuestionOrdre)
 
     this.router.navigate(['questions-interface', this.examId] )
+  }
+
+  afficheChoix(quCode: number) {
+    console.log(quCode)
+    this.dialog.open(ChoicesComponent,
+      {width:'800px',height:'500px',
+      data: {
+        questionCode: quCode
+      }
+    })
   }
 
 }

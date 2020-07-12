@@ -1,0 +1,32 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Enoncé</th>
+      <th scope="col">Ordre</th>
+      <th scope="col">Vrai/Faux</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let choix of choicesArray">
+      <th scope="row"> {{choix.chText}}  </th>
+      <td>  {{choix.choixOrdre}}  </td>
+      <td> {{choix.chCorrect}} </td>
+      <!-- <td> 
+        <button type="button" mat-button 
+         (click)="deleteExam(exam.exId)"
+        class="btn btn-sm btn-block btn-danger " >Supprimer
+        </button>   
+      </td>
+      <td>
+        <button (click)="updateExam(exam.exId)" 
+        type="button" mat-button class="btn btn-sm 
+        btn-block btn-success ">
+          Modifier
+        </button>
+      </td> -->
+    </tr>
+
+  </tbody>
+</table>
+
